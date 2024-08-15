@@ -99,10 +99,10 @@ class InputParserTest {
         }
 
         @Test
-        void parsePlateauSize_ZeroValueString() {
+        void parsePlateauSize_InvalidNumericString() {
             assertThrows(IllegalArgumentException.class,()->inputParser.parsePlateauSize("0", "0"));
-            assertThrows(IllegalArgumentException.class,()->inputParser.parsePlateauSize("9", "0"));
-            assertThrows(IllegalArgumentException.class,()->inputParser.parsePlateauSize("0", "56"));
+            assertThrows(IllegalArgumentException.class,()->inputParser.parsePlateauSize("9", "-1"));
+            assertThrows(IllegalArgumentException.class,()->inputParser.parsePlateauSize("-8", "56"));
 
         }
 
