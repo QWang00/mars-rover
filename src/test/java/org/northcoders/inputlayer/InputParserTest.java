@@ -110,7 +110,7 @@ class InputParserTest {
         void parsePlateauSize_NonNumericValueString() {
             assertThrows(IllegalArgumentException.class,()->inputParser.parsePlateauSize("a", "0"));
             assertThrows(IllegalArgumentException.class,()->inputParser.parsePlateauSize("b", "0"));
-            assertThrows(IllegalArgumentException.class,()->inputParser.parsePlateauSize("c", "d"));
+            assertThrows(IllegalArgumentException.class,()->inputParser.parsePlateauSize("%", "d"));
 
         }
     }
