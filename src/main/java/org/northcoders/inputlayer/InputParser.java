@@ -27,7 +27,7 @@ public class InputParser {
 
     public int[] parsePlateauSize(String maxX, String maxY){
         if(maxX.equals(null) || maxY.equals(null)) throw new NullPointerException();
-        if(maxX.equals("0") || maxY.equals("0")) throw new IllegalArgumentException();
+        if(Integer.valueOf(maxX)<1 || Integer.valueOf(maxY)<1) throw new IllegalArgumentException();
 
         int[] sizeXY = new int[2];
         int intMaxX = Integer.parseInt(maxX);
