@@ -41,7 +41,7 @@ public class InputParser {
         return parsePlateauSize(x, y);
     }
 
-    public CompassDirection parsePosionFacing(String facing){
+    public CompassDirection parsePositionFacing(String facing){
         return parseCompassDirection(facing);
     }
 
