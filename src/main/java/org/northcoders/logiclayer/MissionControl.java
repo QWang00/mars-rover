@@ -51,7 +51,8 @@ public class MissionControl {
     }
 
     public RoverPosition getRoverPosition(String roverID) {
-        return null;
+        Rover rover = rovers.get(roverID);
+        return rover.getPosition();
     }
 
     public void moveRover(String roverID, Instruction instruction) {
