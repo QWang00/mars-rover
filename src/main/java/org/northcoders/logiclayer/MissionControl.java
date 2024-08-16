@@ -3,6 +3,8 @@ package org.northcoders.logiclayer;
 import org.northcoders.inputlayer.Instruction;
 import org.northcoders.inputlayer.RoverPosition;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,16 +15,14 @@ public class MissionControl {
     private Map<String, Rover> rovers;
     List<Plateau> plateaus;
 
-    public MissionControl(Plateau plateau, Map<String, Rover> rovers) {
-
-        this.rovers = rovers;
-    }
-
     public MissionControl() {
-
+        this.plateaus = new ArrayList<>();
+        this.rovers = new HashMap<>();
     }
 
-    public void addRover (String id, String name, Map<String, Rover> rovers){
+
+
+    public void addRover (String id, String name){
         if(id==null || id.equals("") || name==null || name.equals("")) throw new IllegalArgumentException();
         Rover rover = new Rover.RoverBuilder()
                 .robotID(id)
@@ -32,8 +32,15 @@ public class MissionControl {
     }
 
     public void landRoverToPlateau(String roverID, RoverPosition position, Plateau plateau) {
+        if (roverID == null || roverID.equals("") || position == null || plateau == null)
+            throw new IllegalArgumentException();
+        if (!rovers.containsKey(roverID)) throw new IllegalArgumentException();
 
-    }
+        Rover rover = rovers.get(roverID);
+        rover.setPlateau(plateau);
+        rover.setPosition(position);
+        }
+
 
     public List<Plateau> getPlateaus() {
         return plateaus;
