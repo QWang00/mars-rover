@@ -4,8 +4,8 @@ import org.northcoders.inputlayer.RoverPosition;
 
 public class Rover {
     private final String roverID;
-    private final String name;
-    private final RoverPosition position;
+    private String name;
+    private RoverPosition position;
 
     private Rover(RoverBuilder builder){
         this.name = builder.name;
