@@ -13,6 +13,26 @@ public class Rover {
         this.roverID = builder.roverID;
     }
 
+    public String getRoverID() {
+        return roverID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public RoverPosition getPosition() {
+        return position;
+    }
+
+    public void setPosition(RoverPosition position) {
+        this.position = position;
+    }
+
     public class RoverBuilder {
         private String roverID;
         private String name;
