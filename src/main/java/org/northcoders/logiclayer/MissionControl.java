@@ -9,11 +9,12 @@ import java.util.Map;
 
 public class MissionControl {
 
-    private Plateau plateau;
+
     private Map<String, Rover> rovers;
+    List<Plateau> plateaus;
 
     public MissionControl(Plateau plateau, Map<String, Rover> rovers) {
-        this.plateau = plateau;
+
         this.rovers = rovers;
     }
 
@@ -30,12 +31,20 @@ public class MissionControl {
         rovers.put(id, rover);
     }
 
-    public RoverPosition getRoverPosition(String roverID) {
-        return null;
+    public void landRoverToPlateau(String roverID, RoverPosition position, Plateau plateau) {
+
     }
 
-    public void landRover(String roverID, RoverPosition startingPosition, Plateau plateau) {
+    public List<Plateau> getPlateaus() {
+        return plateaus;
+    }
 
+    public void setPlateaus(List<Plateau> plateaus) {
+        this.plateaus = plateaus;
+    }
+
+    public RoverPosition getRoverPosition(String roverID) {
+        return null;
     }
 
     public void moveRover(String roverID, Instruction instruction) {
@@ -44,14 +53,6 @@ public class MissionControl {
 
     public void moveRoversSequentially(Map<String, List<Instruction>> roverInstruction){
 
-    }
-
-    public Plateau getPlateau() {
-        return plateau;
-    }
-
-    public void setPlateau(Plateau plateau) {
-        this.plateau = plateau;
     }
 
     public Map<String, Rover> getRovers() {
