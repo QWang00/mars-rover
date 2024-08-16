@@ -17,15 +17,24 @@ public class MissionControl {
         this.rovers = rovers;
     }
 
-    public void addRover (String id, String name){
+    public MissionControl() {
 
+    }
+
+    public void addRover (String id, String name, Map<String, Rover> rovers){
+        if(id==null || id.equals("") || name==null || name.equals("")) throw new IllegalArgumentException();
+        Rover rover = new Rover.RoverBuilder()
+                .robotID(id)
+                .name(name)
+                .build();
+        rovers.put(id, rover);
     }
 
     public RoverPosition getRoverPosition(String roverID) {
         return null;
     }
 
-    public void landRover(String roverID, RoverPosition startingPosition) {
+    public void landRover(String roverID, RoverPosition startingPosition, Plateau plateau) {
 
     }
 
