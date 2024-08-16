@@ -5,7 +5,7 @@ import org.northcoders.inputlayer.RoverPosition;
 
 
 public class MissionControl {
-    private Instruction instruction;
+    //private Instruction instruction;
 
     public RoverPosition getRoverPosition(Rover rover){
         return rover.getPosition();
@@ -19,7 +19,7 @@ public class MissionControl {
 
     }
 
-    public MissionControl(Instruction instruction) {
-        this.instruction = instruction;
-    }
+//    public MissionControl(Instruction instruction) {
+//        this.instruction = instruction;
+//    }
 }
