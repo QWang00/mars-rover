@@ -51,8 +51,12 @@ public class MissionControl {
     }
 
     public RoverPosition getRoverPosition(String roverID) {
-        Rover rover = rovers.get(roverID);
-        return rover.getPosition();
+        try {
+            Rover rover = rovers.get(roverID);
+            return rover.getPosition();
+        } catch (NullPointerException e) {
+            throw new NullPointerException();
+        }
     }
 
     public void moveRover(String roverID, Instruction instruction) {
