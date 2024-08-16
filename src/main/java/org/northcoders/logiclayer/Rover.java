@@ -33,7 +33,7 @@ public class Rover {
         this.position = position;
     }
 
-    public class RoverBuilder {
+    public static class RoverBuilder {
         private String roverID;
         private String name;
         private RoverPosition position;
