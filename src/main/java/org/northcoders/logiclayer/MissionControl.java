@@ -7,8 +7,8 @@ import org.northcoders.inputlayer.RoverPosition;
 public class MissionControl {
     private Instruction instruction;
 
-    public RoverPosition getRoverPosition(String roverID){
-        return new RoverPosition();
+    public RoverPosition getRoverPosition(Rover rover){
+        return rover.getPosition();
     }
 
     public void landRover (String roverID, RoverPosition position){
@@ -19,4 +19,7 @@ public class MissionControl {
 
     }
 
+    public MissionControl(Instruction instruction) {
+        this.instruction = instruction;
+    }
 }
