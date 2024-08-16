@@ -6,9 +6,14 @@ public class RoverPosition {
     private CompassDirection facing;
 
     public RoverPosition(int x, int y, CompassDirection facing) {
+
         this.x = x;
         this.y = y;
         this.facing = facing;
+
+    }
+
+    public RoverPosition() {
     }
 
     public int getX() {
