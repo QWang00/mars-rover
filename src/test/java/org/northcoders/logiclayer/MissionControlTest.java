@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.northcoders.inputlayer.CompassDirection;
 import org.northcoders.inputlayer.RoverPosition;
 
+import javax.swing.text.Position;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,20 +22,20 @@ class MissionControlTest {
     }
 
     @Test
-    void addRover_EmptyRover() {
+    void testAddRover_EmptyRover() {
         assertThrows(IllegalArgumentException.class,()-> missionControl.addRover("", ""));
         assertThrows(IllegalArgumentException.class,()-> missionControl.addRover("R1", ""));
         assertThrows(IllegalArgumentException.class,()-> missionControl.addRover("", "Rover1"));
     }
     @Test
-    void addRover_NullRover() {
+    void testAddRover_NullRover() {
         assertThrows(IllegalArgumentException.class,()-> missionControl.addRover(null, null));
         assertThrows(IllegalArgumentException.class,()-> missionControl.addRover("R1", null));
         assertThrows(IllegalArgumentException.class,()-> missionControl.addRover(null, "Rover1"));
 
     }
     @Test
-    void addRover_ValidRoverAddedToMap() {
+    void testAddRover_ValidRoverAddedToMap() {
         missionControl.addRover("R1", "Rover1");
         assertEquals(1, missionControl.getRovers().size());
         assertEquals("Rover1", missionControl.getRovers().get("R1").getName());
@@ -43,7 +44,7 @@ class MissionControlTest {
 
 
     @Test
-    void landRoverToPlateau_EmptyFields() {
+    void testLandRoverToPlateau_EmptyFields() {
         RoverPosition position = new RoverPosition(10,3, CompassDirection.S);
         Plateau plateau = new Plateau(new int[]{15, 7}, "P1");
         missionControl.addRover("R1", "Rover1");
@@ -52,7 +53,7 @@ class MissionControlTest {
     }
 
     @Test
-    void landRoverToPlateau_NullFields() {
+    void testLandRoverToPlateau_NullFields() {
         RoverPosition position = new RoverPosition(10,3, CompassDirection.S);
         Plateau plateau = new Plateau(new int[]{15, 7}, "P1");
         missionControl.addRover("R1", "Rover1");
@@ -63,7 +64,7 @@ class MissionControlTest {
     }
 
     @Test
-    void landRoverToPlateau_RoverNotInMap() {
+    void testLandRoverToPlateau_RoverNotInMap() {
         RoverPosition position = new RoverPosition(10,3, CompassDirection.S);
         Plateau plateau = new Plateau(new int[]{15, 7}, "P1");
 
@@ -76,7 +77,7 @@ class MissionControlTest {
     }
 
     @Test
-    void landRoverToPlateau_Valid(){
+    void testLandRoverToPlateau_Valid(){
         RoverPosition position = new RoverPosition(10, 3, CompassDirection.S);
         Plateau plateau = new Plateau(new int[]{15, 7}, "P1");
 
@@ -94,7 +95,17 @@ class MissionControlTest {
 
 
     @Test
-    void getRoverPosition() {
+    void testGetRoverPosition_RoverIDNotInRovers() {
+        assertThrows(NullPointerException.class,()->missionControl.getRoverPosition("R2"));
+    }
+
+    @Test
+    void testGetRoverPosition_ValidRoverID() {
+        missionControl.addRover("R1", "Rover1");
+        RoverPosition position = new RoverPosition(3,2,CompassDirection.S);
+        missionControl.landRoverToPlateau("R1", position, new Plateau(new int[]{7,7}, "P1"));
+        assertEquals(position, missionControl.getRoverPosition("R1"));
+
     }
 
     @Test
@@ -104,4 +115,5 @@ class MissionControlTest {
     @Test
     void moveRoversSequentially() {
     }
+
 }
