@@ -4,7 +4,7 @@ public class PlateauSize {
     private int maxX;
     private int maxY;
 
-    public int getMaxX() {
+    public  int getMaxX() {
         return maxX;
     }
 
