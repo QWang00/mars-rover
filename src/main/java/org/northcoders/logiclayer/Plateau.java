@@ -5,10 +5,20 @@ import org.northcoders.inputlayer.PlateauSize;
 public class Plateau{
     private int maxX;
     private int maxY;
+    private String name;
 
-    public Plateau(int[] dimensions) {
+    public Plateau(int[] dimensions, String name) {
             this.maxX = dimensions[0];
             this.maxY = dimensions[1];
+            this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Plateau() {
