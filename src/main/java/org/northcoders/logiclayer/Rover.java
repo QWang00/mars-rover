@@ -6,11 +6,13 @@ public class Rover {
     private final String roverID;
     private String name;
     private RoverPosition position;
+    private Plateau plateau;
 
     private Rover(RoverBuilder builder){
         this.name = builder.name;
         this.position = builder.position;
         this.roverID = builder.roverID;
+        this.plateau = builder.plateau;
     }
 
     public String getRoverID() {
@@ -33,10 +35,19 @@ public class Rover {
         this.position = position;
     }
 
+    public Plateau getPlateau() {
+        return plateau;
+    }
+
+    public void setPlateau(Plateau plateau) {
+        this.plateau = plateau;
+    }
+
     public static class RoverBuilder {
         private String roverID;
         private String name;
         private RoverPosition position;
+        private Plateau plateau;
 
         public RoverBuilder robotID(String roverID) {
             this.roverID = roverID;
@@ -50,6 +61,11 @@ public class Rover {
 
         public RoverBuilder position(RoverPosition position) {
             this.position = position;
+            return this;
+        }
+
+        public RoverBuilder plateau(Plateau plateau){
+            this.plateau = plateau;
             return this;
         }
 
