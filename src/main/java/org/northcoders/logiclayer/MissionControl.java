@@ -3,6 +3,7 @@ package org.northcoders.logiclayer;
 import org.northcoders.inputlayer.Instruction;
 import org.northcoders.inputlayer.RoverPosition;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -29,6 +30,10 @@ public class MissionControl {
     }
 
     public void moveRover(String roverID, Instruction instruction) {
+
+    }
+
+    public void moveRoversSequentially(Map<String, List<Instruction>> roverInstruction){
 
     }
 
