@@ -32,7 +32,10 @@ public class Rover {
     }
 
     public void setPosition(RoverPosition position) {
-        this.position = position;
+        if(position.getX()>plateau.getMaxX() || position.getY() > plateau.getMaxY()) throw new InvalidPositionException();
+        else {
+            this.position = position;
+        }
     }
 
     public Plateau getPlateau() {
