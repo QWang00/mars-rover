@@ -59,11 +59,6 @@ public class MissionControl {
             throw new NullPointerException();
         }
     }
-// TODO: might need to delete if not used at all in the end
-//    public CompassDirection getFacingDirection(String roverID){
-//        Rover rover = rovers.get(roverID);
-//        return rover.getPosition().getFacing();
-//    }
 
     public CompassDirection changeFacingDirection(CompassDirection originalFacing, Instruction instruction) {
         if (instruction == null || originalFacing == null) throw new NullPointerException();
@@ -120,9 +115,7 @@ public class MissionControl {
         return currentFacing;
     }
 
-    public void moveRoversSequentially(Map<String, List<Instruction>> roverInstruction){
 
-    }
 
     public Map<String, Rover> getRovers() {
         return rovers;
