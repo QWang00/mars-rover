@@ -219,8 +219,5 @@ class MissionControlTest {
 
     }
 
-    @Test
-    void moveRoversSequentially() {
-    }
 
 }
