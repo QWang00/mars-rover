@@ -63,4 +63,98 @@ class RoverTest {
         assertEquals(1, rover.getPosition().getY());
 
     }
+
+    @Test
+    public void testMove_FromNorthOnTopLeftEdge() {
+        Plateau plateau = new Plateau(new int[]{10,6}, "P1");
+        Rover rover = new Rover.RoverBuilder()
+                .position(new RoverPosition(7,6,CompassDirection.N))
+                .plateau(plateau)
+                .build();
+        rover.move();
+        assertEquals(7, rover.getPosition().getX());
+        assertEquals(6, rover.getPosition().getY());
+    }
+
+    @Test
+    public void testMove_FromSouthOnBottomLeftEdge() {
+        Plateau plateau = new Plateau(new int[]{10,6}, "P1");
+        Rover rover = new Rover.RoverBuilder()
+                .position(new RoverPosition(2,1,CompassDirection.S))
+                .plateau(plateau)
+                .build();
+        rover.move();
+        assertEquals(2, rover.getPosition().getX());
+        assertEquals(1, rover.getPosition().getY());
+    }
+
+    @Test
+    public void testMove_FromEastOnBottomRightEdge() {
+        Plateau plateau = new Plateau(new int[]{10,6}, "P1");
+        Rover rover = new Rover.RoverBuilder()
+                .position(new RoverPosition(10,6,CompassDirection.E))
+                .plateau(plateau)
+                .build();
+        rover.move();
+        assertEquals(10, rover.getPosition().getX());
+        assertEquals(6, rover.getPosition().getY());
+    }
+
+    @Test
+    public void testMove_FromWestOnTopRightEdge() {
+        Plateau plateau = new Plateau(new int[]{10,6}, "P1");
+        Rover rover = new Rover.RoverBuilder()
+                .position(new RoverPosition(1,6,CompassDirection.W))
+                .plateau(plateau)
+                .build();
+        rover.move();
+        assertEquals(1, rover.getPosition().getX());
+        assertEquals(6, rover.getPosition().getY());
+
+    }
+
+    @Test
+    public void testMove_FromNorthNotOnEdge() {
+        Plateau plateau = new Plateau(new int[]{10,6}, "P1");
+        Rover rover = new Rover.RoverBuilder()
+                .position(new RoverPosition(3,5,CompassDirection.N))
+                .plateau(plateau)
+                .build();
+        rover.move();
+        assertEquals(3, rover.getPosition().getX());
+        assertEquals(6, rover.getPosition().getY());
+    }
+    @Test
+    public void testMove_FromSouthNotOnEdge() {
+        Plateau plateau = new Plateau(new int[]{10,6}, "P1");
+        Rover rover = new Rover.RoverBuilder()
+                .position(new RoverPosition(7,6,CompassDirection.S))
+                .plateau(plateau)
+                .build();
+        rover.move();
+        assertEquals(7, rover.getPosition().getX());
+        assertEquals(5, rover.getPosition().getY());
+    }
+    @Test
+    public void testMove_FromWestNotOnEdge() {
+        Plateau plateau = new Plateau(new int[]{10,6}, "P1");
+        Rover rover = new Rover.RoverBuilder()
+                .position(new RoverPosition(7,6,CompassDirection.W))
+                .plateau(plateau)
+                .build();
+        rover.move();
+        assertEquals(6, rover.getPosition().getX());
+        assertEquals(6, rover.getPosition().getY());
+    }
+    @Test
+    public void testMove_FromEastNotOnEdge() {
+        Plateau plateau = new Plateau(new int[]{10,6}, "P1");
+        Rover rover = new Rover.RoverBuilder()
+                .position(new RoverPosition(7,6,CompassDirection.E))
+                .plateau(plateau)
+                .build();
+        rover.move();
+        assertEquals(8, rover.getPosition().getX());
+        assertEquals(6, rover.getPosition().getY());
+    }
 }
