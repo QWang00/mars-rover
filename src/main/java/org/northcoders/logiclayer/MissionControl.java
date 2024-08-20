@@ -1,5 +1,6 @@
 package org.northcoders.logiclayer;
 
+import org.northcoders.inputlayer.CompassDirection;
 import org.northcoders.inputlayer.Instruction;
 import org.northcoders.inputlayer.RoverPosition;
 
@@ -58,9 +59,65 @@ public class MissionControl {
             throw new NullPointerException();
         }
     }
+// TODO: might need to delete if not used at all in the end
+//    public CompassDirection getFacingDirection(String roverID){
+//        Rover rover = rovers.get(roverID);
+//        return rover.getPosition().getFacing();
+//    }
 
-    public void moveRover(String roverID, Instruction instruction) {
+    public CompassDirection changeFacingDirection(CompassDirection originalFacing, Instruction instruction) {
+        if (instruction == null || originalFacing == null) throw new NullPointerException();
+        switch (originalFacing) {
+            case N -> {
+                if (instruction.equals(Instruction.R)) {
+                    return CompassDirection.E;
+                } else if (instruction.equals(Instruction.L)) {
+                    return CompassDirection.W;
+                }
+            }
+            case S -> {
+                if (instruction.equals(Instruction.R)) {
+                    return CompassDirection.W;
+                } else if (instruction.equals(Instruction.L)) {
+                    return CompassDirection.E;
+                }
+            }
+            case W -> {
+                if (instruction.equals(Instruction.R)) {
+                    return CompassDirection.N;
+                } else if (instruction.equals(Instruction.L)) {
+                    return CompassDirection.S;
+                }
+            }
+            case E -> {
+                if (instruction.equals(Instruction.R)) {
+                    return CompassDirection.S;
+                } else if (instruction.equals(Instruction.L)) {
+                    return CompassDirection.N;
+                }
+            }
+            default -> {
+                return originalFacing;
+            }
+        }
+        return originalFacing;
+    }
 
+
+    public CompassDirection moveRover(String roverID, List<Instruction> instructions) {
+        Rover rover = rovers.get(roverID);
+        CompassDirection currentFacing = null;
+
+        for (Instruction instruction : instructions){
+            if(instruction == Instruction.M){
+                rover.move();
+            }
+            currentFacing = rover.getPosition().getFacing();
+            CompassDirection newFacingDirection = changeFacingDirection(currentFacing, instruction);
+            rover.getPosition().setFacing(newFacingDirection);
+
+        }
+        return currentFacing;
     }
 
     public void moveRoversSequentially(Map<String, List<Instruction>> roverInstruction){
