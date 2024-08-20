@@ -3,6 +3,7 @@ package org.northcoders.logiclayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.northcoders.inputlayer.CompassDirection;
+import org.northcoders.inputlayer.Instruction;
 import org.northcoders.inputlayer.RoverPosition;
 
 import javax.swing.text.Position;
@@ -109,7 +110,49 @@ class MissionControlTest {
     }
 
     @Test
+    public void testChangeFacingDirection_NullInstruction() {
+        CompassDirection originalFacing = CompassDirection.N;
+        Instruction instruction = null;
+        assertThrows(NullPointerException.class,()-> missionControl.changeFacingDirection(originalFacing, instruction));
+
+    }
+
+    @Test
+    public void testChangeFacingDirection_NullOriginalFacing() {
+        CompassDirection originalFacing = null;
+        Instruction instruction = Instruction.R;
+        assertThrows(NullPointerException.class,()-> missionControl.changeFacingDirection(originalFacing, instruction));
+    }
+
+    @Test
+    void testChangeFacingDirection_FromNorthFacingDirection(){
+        CompassDirection originalFacing = CompassDirection.N;
+        assertEquals(CompassDirection.E, missionControl.changeFacingDirection(originalFacing, Instruction.R));
+        assertEquals(CompassDirection.W, missionControl.changeFacingDirection(originalFacing, Instruction.L));
+    }
+    @Test
+    void testChangeFacingDirection_FromSouthFacingDirection(){
+        CompassDirection originalFacing = CompassDirection.S;
+        assertEquals(CompassDirection.W, missionControl.changeFacingDirection(originalFacing, Instruction.R));
+        assertEquals(CompassDirection.E, missionControl.changeFacingDirection(originalFacing, Instruction.L));
+    }
+    @Test
+    void testChangeFacingDirection_FromWestFacingDirection(){
+        CompassDirection originalFacing = CompassDirection.W;
+        assertEquals(CompassDirection.N, missionControl.changeFacingDirection(originalFacing, Instruction.R));
+        assertEquals(CompassDirection.S, missionControl.changeFacingDirection(originalFacing, Instruction.L));
+    }
+
+    @Test
+    void testChangeFacingDirection_FromEastFacingDirection(){
+        CompassDirection originalFacing = CompassDirection.E;
+        assertEquals(CompassDirection.S, missionControl.changeFacingDirection(originalFacing, Instruction.R));
+        assertEquals(CompassDirection.N, missionControl.changeFacingDirection(originalFacing, Instruction.L));
+    }
+
+    @Test
     void moveRover() {
+
     }
 
     @Test
