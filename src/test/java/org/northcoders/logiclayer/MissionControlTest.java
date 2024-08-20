@@ -151,7 +151,71 @@ class MissionControlTest {
     }
 
     @Test
-    void moveRover() {
+    void testMoveRover_RoverIDNotInMap() {
+        Rover rover = new Rover.RoverBuilder()
+                .robotID("R1")
+                .name("Rover1")
+                .build();
+        List<Instruction> instructions = new ArrayList<>(){};
+        instructions.add(Instruction.R);
+        assertThrows(NullPointerException.class,()->missionControl.moveRover("R1", instructions));
+    }
+
+    @Test
+    void testMoveRover_EmptyInstructions() {
+        Rover rover = new Rover.RoverBuilder()
+                .robotID("R1")
+                .name("Rover1")
+                .plateau(new Plateau(new int[]{10,6}, "P1"))
+                .position(new RoverPosition(6,5,CompassDirection.S))
+                .build();
+        missionControl.getRovers().put("R1", rover);
+
+        List<Instruction> instructions = new ArrayList<>(){};
+        missionControl.moveRover("R1", instructions);
+        assertEquals(6,rover.getPosition().getX());
+        assertEquals(5,rover.getPosition().getY());
+    }
+
+    @Test
+    void testMoveRover_SingleInstruction() {
+        Rover rover = new Rover.RoverBuilder()
+                .robotID("R1")
+                .name("Rover1")
+                .plateau(new Plateau(new int[]{10,6}, "P1"))
+                .position(new RoverPosition(6,5,CompassDirection.S))
+                .build();
+        missionControl.getRovers().put("R1", rover);
+
+        List<Instruction> instructions = new ArrayList<>(){};
+        instructions.add(Instruction.R);
+        missionControl.moveRover("R1", instructions);
+        assertEquals(6,rover.getPosition().getX());
+        assertEquals(5,rover.getPosition().getY());
+        assertEquals(CompassDirection.W, rover.getPosition().getFacing());
+
+    }
+
+    @Test
+    void testMoveRover_MultipleInstructions() {
+        Rover rover = new Rover.RoverBuilder()
+                .robotID("R1")
+                .name("Rover1")
+                .plateau(new Plateau(new int[]{10,6}, "P1"))
+                .position(new RoverPosition(3,4,CompassDirection.S))
+                .build();
+        missionControl.getRovers().put("R1", rover);
+        List<Instruction> instructions = new ArrayList<>(){};
+        instructions.add(Instruction.R);
+        instructions.add(Instruction.M);
+        instructions.add(Instruction.L);
+        instructions.add(Instruction.L);
+        instructions.add(Instruction.R);
+        instructions.add(Instruction.M);
+        missionControl.moveRover("R1", instructions);
+        assertEquals(2,rover.getPosition().getX());
+        assertEquals(3,rover.getPosition().getY());
+        assertEquals(CompassDirection.S, rover.getPosition().getFacing());
 
     }
 
