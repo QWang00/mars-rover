@@ -214,7 +214,59 @@ class RoverTest {
         assertEquals(CompassDirection.N, rover.turnLeft(CompassDirection.E));
     }
 
+    @Test
+    public void testChangeFacingDirection_NullInstruction() {
+        Rover rover = new Rover.RoverBuilder()
+                .build();
+        CompassDirection originalFacing = CompassDirection.N;
+        Instruction instruction = null;
+        assertThrows(NullPointerException.class, () -> rover.changeFacingDirection(originalFacing, instruction));
+    }
 
+    @Test
+    public void testChangeFacingDirection_NullOriginalFacing() {
+        Rover rover = new Rover.RoverBuilder()
+                .build();
+        CompassDirection originalFacing = null;
+        Instruction instruction = Instruction.R;
+        assertThrows(NullPointerException.class, () -> rover.changeFacingDirection(originalFacing, instruction));
+    }
+
+    @Test
+    void testChangeFacingDirection_FromNorthFacingDirection() {
+        Rover rover = new Rover.RoverBuilder()
+                .build();
+        CompassDirection originalFacing = CompassDirection.N;
+        assertEquals(CompassDirection.E, rover.changeFacingDirection(originalFacing, Instruction.R));
+        assertEquals(CompassDirection.W, rover.changeFacingDirection(originalFacing, Instruction.L));
+    }
+
+    @Test
+    void testChangeFacingDirection_FromSouthFacingDirection() {
+        Rover rover = new Rover.RoverBuilder()
+                .build();
+        CompassDirection originalFacing = CompassDirection.S;
+        assertEquals(CompassDirection.W, rover.changeFacingDirection(originalFacing, Instruction.R));
+        assertEquals(CompassDirection.E, rover.changeFacingDirection(originalFacing, Instruction.L));
+    }
+
+    @Test
+    void testChangeFacingDirection_FromWestFacingDirection() {
+        Rover rover = new Rover.RoverBuilder()
+                .build();
+        CompassDirection originalFacing = CompassDirection.W;
+        assertEquals(CompassDirection.N, rover.changeFacingDirection(originalFacing, Instruction.R));
+        assertEquals(CompassDirection.S, rover.changeFacingDirection(originalFacing, Instruction.L));
+    }
+
+    @Test
+    void testChangeFacingDirection_FromEastFacingDirection() {
+        Rover rover = new Rover.RoverBuilder()
+                .build();
+        CompassDirection originalFacing = CompassDirection.E;
+        assertEquals(CompassDirection.S, rover.changeFacingDirection(originalFacing, Instruction.R));
+        assertEquals(CompassDirection.N, rover.changeFacingDirection(originalFacing, Instruction.L));
+    }
 
 
     @Test
