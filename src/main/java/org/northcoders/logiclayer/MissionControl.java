@@ -60,68 +60,17 @@ public class MissionControl {
         }
     }
 
-    public CompassDirection changeFacingDirection(CompassDirection originalFacing, Instruction instruction) {
-        if (instruction == null || originalFacing == null) throw new NullPointerException();
-        switch (originalFacing) {
-            case N -> {
-                if (instruction.equals(Instruction.R)) {
-                    return CompassDirection.E;
-                } else if (instruction.equals(Instruction.L)) {
-                    return CompassDirection.W;
-                }
-            }
-            case S -> {
-                if (instruction.equals(Instruction.R)) {
-                    return CompassDirection.W;
-                } else if (instruction.equals(Instruction.L)) {
-                    return CompassDirection.E;
-                }
-            }
-            case W -> {
-                if (instruction.equals(Instruction.R)) {
-                    return CompassDirection.N;
-                } else if (instruction.equals(Instruction.L)) {
-                    return CompassDirection.S;
-                }
-            }
-            case E -> {
-                if (instruction.equals(Instruction.R)) {
-                    return CompassDirection.S;
-                } else if (instruction.equals(Instruction.L)) {
-                    return CompassDirection.N;
-                }
-            }
-            default -> {
-                return originalFacing;
-            }
-        }
-        return originalFacing;
-    }
-
-
     public CompassDirection moveRoverByInstructions(String roverID, List<Instruction> instructions) {
         Rover rover = rovers.get(roverID);
         CompassDirection currentFacing = null;
 
         for (Instruction instruction : instructions){
-            processInstruction(instruction, rover);
+            rover.processInstruction(instruction, rover);
             currentFacing = rover.getPosition().getFacing();
 
         }
         return currentFacing;
     }
-
-    protected void processInstruction(Instruction instruction, Rover rover) {
-        CompassDirection currentFacing;
-        if(instruction == Instruction.M){
-            rover.move();
-        }
-        currentFacing = rover.getPosition().getFacing();
-        CompassDirection newFacingDirection = changeFacingDirection(currentFacing, instruction);
-        rover.getPosition().setFacing(newFacingDirection);
-
-    }
-
 
     public Map<String, Rover> getRovers() {
         return rovers;
