@@ -57,8 +57,6 @@ public class Rover {
             return;
         }
 
-
-
         setPosition(newPosition);
     }
 
@@ -165,5 +163,8 @@ public class Rover {
 
     }
 
+    private boolean isPositionOccupied(RoverPosition newPosition) {
+        return false;
+    }
 
 }
