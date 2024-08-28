@@ -1,6 +1,5 @@
 package org.northcoders.logiclayer;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.northcoders.inputlayer.CompassDirection;
 import org.northcoders.inputlayer.Instruction;
@@ -66,95 +65,95 @@ class RoverTest {
     }
 
     @Test
-    public void testMove_FromNorthOnTopLeftEdge() {
+    public void testMoveForward_FromNorthOnTopLeftEdge() {
         Plateau plateau = new Plateau(new int[]{10,6}, "P1");
         Rover rover = new Rover.RoverBuilder()
                 .position(new RoverPosition(7,6,CompassDirection.N))
                 .plateau(plateau)
                 .build();
-        rover.move();
+        rover.moveForward();
         assertEquals(7, rover.getPosition().getX());
         assertEquals(6, rover.getPosition().getY());
     }
 
     @Test
-    public void testMove_FromSouthOnBottomLeftEdge() {
+    public void testMoveForward_FromSouthOnBottomLeftEdge() {
         Plateau plateau = new Plateau(new int[]{10,6}, "P1");
         Rover rover = new Rover.RoverBuilder()
                 .position(new RoverPosition(2,1,CompassDirection.S))
                 .plateau(plateau)
                 .build();
-        rover.move();
+        rover.moveForward();
         assertEquals(2, rover.getPosition().getX());
         assertEquals(1, rover.getPosition().getY());
     }
 
     @Test
-    public void testMove_FromEastOnBottomRightEdge() {
+    public void testMoveForward_FromEastOnBottomRightEdge() {
         Plateau plateau = new Plateau(new int[]{10,6}, "P1");
         Rover rover = new Rover.RoverBuilder()
                 .position(new RoverPosition(10,6,CompassDirection.E))
                 .plateau(plateau)
                 .build();
-        rover.move();
+        rover.moveForward();
         assertEquals(10, rover.getPosition().getX());
         assertEquals(6, rover.getPosition().getY());
     }
 
     @Test
-    public void testMove_FromWestOnTopRightEdge() {
+    public void testMoveForward_FromWestOnTopRightEdge() {
         Plateau plateau = new Plateau(new int[]{10,6}, "P1");
         Rover rover = new Rover.RoverBuilder()
                 .position(new RoverPosition(1,6,CompassDirection.W))
                 .plateau(plateau)
                 .build();
-        rover.move();
+        rover.moveForward();
         assertEquals(1, rover.getPosition().getX());
         assertEquals(6, rover.getPosition().getY());
 
     }
 
     @Test
-    public void testMove_FromNorthNotOnEdge() {
+    public void testMoveForward_FromNorthNotOnEdge() {
         Plateau plateau = new Plateau(new int[]{10,6}, "P1");
         Rover rover = new Rover.RoverBuilder()
                 .position(new RoverPosition(3,5,CompassDirection.N))
                 .plateau(plateau)
                 .build();
-        rover.move();
+        rover.moveForward();
         assertEquals(3, rover.getPosition().getX());
         assertEquals(6, rover.getPosition().getY());
     }
     @Test
-    public void testMove_FromSouthNotOnEdge() {
+    public void testMoveForward_FromSouthNotOnEdge() {
         Plateau plateau = new Plateau(new int[]{10,6}, "P1");
         Rover rover = new Rover.RoverBuilder()
                 .position(new RoverPosition(7,6,CompassDirection.S))
                 .plateau(plateau)
                 .build();
-        rover.move();
+        rover.moveForward();
         assertEquals(7, rover.getPosition().getX());
         assertEquals(5, rover.getPosition().getY());
     }
     @Test
-    public void testMove_FromWestNotOnEdge() {
+    public void testMoveForward_FromWestNotOnEdge() {
         Plateau plateau = new Plateau(new int[]{10,6}, "P1");
         Rover rover = new Rover.RoverBuilder()
                 .position(new RoverPosition(7,6,CompassDirection.W))
                 .plateau(plateau)
                 .build();
-        rover.move();
+        rover.moveForward();
         assertEquals(6, rover.getPosition().getX());
         assertEquals(6, rover.getPosition().getY());
     }
     @Test
-    public void testMove_FromEastNotOnEdge() {
+    public void testMoveForward_FromEastNotOnEdge() {
         Plateau plateau = new Plateau(new int[]{10,6}, "P1");
         Rover rover = new Rover.RoverBuilder()
                 .position(new RoverPosition(7,6,CompassDirection.E))
                 .plateau(plateau)
                 .build();
-        rover.move();
+        rover.moveForward();
         assertEquals(8, rover.getPosition().getX());
         assertEquals(6, rover.getPosition().getY());
     }
@@ -244,7 +243,7 @@ class RoverTest {
     }
 
     @Test
-    void testProcessInstruction_MoveForward() {
+    void testProcessInstruction_MoveForwardForward() {
         Rover rover = new Rover.RoverBuilder()
                 .robotID("R1")
                 .name("Rover1")
