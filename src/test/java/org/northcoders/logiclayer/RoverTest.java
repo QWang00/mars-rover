@@ -3,6 +3,7 @@ package org.northcoders.logiclayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.northcoders.inputlayer.CompassDirection;
+import org.northcoders.inputlayer.Instruction;
 import org.northcoders.inputlayer.RoverPosition;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -157,4 +158,103 @@ class RoverTest {
         assertEquals(8, rover.getPosition().getX());
         assertEquals(6, rover.getPosition().getY());
     }
+
+    @Test
+    public void testChangeFacingDirection_NullInstruction() {
+        Rover rover = new Rover.RoverBuilder()
+                .position(new RoverPosition(7,6,CompassDirection.E))
+                .build();
+        CompassDirection originalFacing = CompassDirection.N;
+        Instruction instruction = null;
+        assertThrows(NullPointerException.class,()-> rover.changeFacingDirection(originalFacing, instruction));
+
+    }
+
+    @Test
+    public void testChangeFacingDirection_NullOriginalFacing() {
+        Rover rover = new Rover.RoverBuilder()
+                .position(new RoverPosition(7,6,CompassDirection.E))
+                .build();
+        CompassDirection originalFacing = null;
+        Instruction instruction = Instruction.R;
+        assertThrows(NullPointerException.class,()-> rover.changeFacingDirection(originalFacing, instruction));
+    }
+
+    @Test
+    void testChangeFacingDirection_FromNorthFacingDirection(){
+        Rover rover = new Rover.RoverBuilder()
+                .build();
+        CompassDirection originalFacing = CompassDirection.N;
+        assertEquals(CompassDirection.E, rover.changeFacingDirection(originalFacing, Instruction.R));
+        assertEquals(CompassDirection.W, rover.changeFacingDirection(originalFacing, Instruction.L));
+    }
+    @Test
+    void testChangeFacingDirection_FromSouthFacingDirection(){
+        Rover rover = new Rover.RoverBuilder()
+                .build();
+        CompassDirection originalFacing = CompassDirection.S;
+        assertEquals(CompassDirection.W, rover.changeFacingDirection(originalFacing, Instruction.R));
+        assertEquals(CompassDirection.E, rover.changeFacingDirection(originalFacing, Instruction.L));
+    }
+    @Test
+    void testChangeFacingDirection_FromWestFacingDirection(){
+        Rover rover = new Rover.RoverBuilder()
+                .build();
+        CompassDirection originalFacing = CompassDirection.W;
+        assertEquals(CompassDirection.N, rover.changeFacingDirection(originalFacing, Instruction.R));
+        assertEquals(CompassDirection.S, rover.changeFacingDirection(originalFacing, Instruction.L));
+    }
+
+    @Test
+    void testChangeFacingDirection_FromEastFacingDirection(){
+        Rover rover = new Rover.RoverBuilder()
+                .build();
+        CompassDirection originalFacing = CompassDirection.E;
+        assertEquals(CompassDirection.S, rover.changeFacingDirection(originalFacing, Instruction.R));
+        assertEquals(CompassDirection.N, rover.changeFacingDirection(originalFacing, Instruction.L));
+    }
+
+
+
+
+    @Test
+    void testProcessInstruction_TurnLeft() {
+        Rover rover = new Rover.RoverBuilder()
+                .robotID("R1")
+                .name("Rover1")
+                .plateau(new Plateau(new int[]{10,6}, "P1"))
+                .position(new RoverPosition(6,5,CompassDirection.S))
+                .build();
+
+        rover.processInstruction(Instruction.L, rover);
+        assertEquals(CompassDirection.E, rover.getPosition().getFacing());
+    }
+
+    @Test
+    void testProcessInstruction_TurnRight() {
+        Rover rover = new Rover.RoverBuilder()
+                .robotID("R1")
+                .name("Rover1")
+                .plateau(new Plateau(new int[]{10,6}, "P1"))
+                .position(new RoverPosition(6,5,CompassDirection.S))
+                .build();
+
+        rover.processInstruction(Instruction.R, rover);
+        assertEquals(CompassDirection.W, rover.getPosition().getFacing());
+    }
+
+    @Test
+    void testProcessInstruction_MoveForward() {
+        Rover rover = new Rover.RoverBuilder()
+                .robotID("R1")
+                .name("Rover1")
+                .plateau(new Plateau(new int[]{10,6}, "P1"))
+                .position(new RoverPosition(6,5,CompassDirection.N))
+                .build();
+
+        rover.processInstruction(Instruction.M, rover);
+        assertEquals(6, rover.getPosition().getX());
+        assertEquals(6, rover.getPosition().getY());
+    }
+
 }

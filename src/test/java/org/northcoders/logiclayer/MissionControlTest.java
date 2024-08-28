@@ -108,49 +108,9 @@ class MissionControlTest {
 
     }
 
-    @Test
-    public void testChangeFacingDirection_NullInstruction() {
-        CompassDirection originalFacing = CompassDirection.N;
-        Instruction instruction = null;
-        assertThrows(NullPointerException.class,()-> missionControl.changeFacingDirection(originalFacing, instruction));
-
-    }
 
     @Test
-    public void testChangeFacingDirection_NullOriginalFacing() {
-        CompassDirection originalFacing = null;
-        Instruction instruction = Instruction.R;
-        assertThrows(NullPointerException.class,()-> missionControl.changeFacingDirection(originalFacing, instruction));
-    }
-
-    @Test
-    void testChangeFacingDirection_FromNorthFacingDirection(){
-        CompassDirection originalFacing = CompassDirection.N;
-        assertEquals(CompassDirection.E, missionControl.changeFacingDirection(originalFacing, Instruction.R));
-        assertEquals(CompassDirection.W, missionControl.changeFacingDirection(originalFacing, Instruction.L));
-    }
-    @Test
-    void testChangeFacingDirection_FromSouthFacingDirection(){
-        CompassDirection originalFacing = CompassDirection.S;
-        assertEquals(CompassDirection.W, missionControl.changeFacingDirection(originalFacing, Instruction.R));
-        assertEquals(CompassDirection.E, missionControl.changeFacingDirection(originalFacing, Instruction.L));
-    }
-    @Test
-    void testChangeFacingDirection_FromWestFacingDirection(){
-        CompassDirection originalFacing = CompassDirection.W;
-        assertEquals(CompassDirection.N, missionControl.changeFacingDirection(originalFacing, Instruction.R));
-        assertEquals(CompassDirection.S, missionControl.changeFacingDirection(originalFacing, Instruction.L));
-    }
-
-    @Test
-    void testChangeFacingDirection_FromEastFacingDirection(){
-        CompassDirection originalFacing = CompassDirection.E;
-        assertEquals(CompassDirection.S, missionControl.changeFacingDirection(originalFacing, Instruction.R));
-        assertEquals(CompassDirection.N, missionControl.changeFacingDirection(originalFacing, Instruction.L));
-    }
-
-    @Test
-    void testMoveRover_RoverByInstructionsIDNotInMap() {
+    void testMoveRoverByInstructions_RoverIDNotInMap() {
         Rover rover = new Rover.RoverBuilder()
                 .robotID("R1")
                 .name("Rover1")
@@ -159,48 +119,6 @@ class MissionControlTest {
         instructions.add(Instruction.R);
         assertThrows(NullPointerException.class,()->missionControl.moveRoverByInstructions("R1", instructions));
     }
-
-
-    @Test
-    void testProcessInstruction_TurnLeft() {
-        Rover rover = new Rover.RoverBuilder()
-                .robotID("R1")
-                .name("Rover1")
-                .plateau(new Plateau(new int[]{10,6}, "P1"))
-                .position(new RoverPosition(6,5,CompassDirection.S))
-                .build();
-
-        missionControl.processInstruction(Instruction.L, rover);
-        assertEquals(CompassDirection.E, rover.getPosition().getFacing());
-    }
-
-    @Test
-    void testProcessInstruction_TurnRight() {
-        Rover rover = new Rover.RoverBuilder()
-                .robotID("R1")
-                .name("Rover1")
-                .plateau(new Plateau(new int[]{10,6}, "P1"))
-                .position(new RoverPosition(6,5,CompassDirection.S))
-                .build();
-
-        missionControl.processInstruction(Instruction.R, rover);
-        assertEquals(CompassDirection.W, rover.getPosition().getFacing());
-    }
-
-    @Test
-    void testProcessInstruction_MoveForward() {
-        Rover rover = new Rover.RoverBuilder()
-                .robotID("R1")
-                .name("Rover1")
-                .plateau(new Plateau(new int[]{10,6}, "P1"))
-                .position(new RoverPosition(6,5,CompassDirection.N))
-                .build();
-
-        missionControl.processInstruction(Instruction.M, rover);
-        assertEquals(6, rover.getPosition().getX());
-        assertEquals(6, rover.getPosition().getY());
-    }
-
 
     @Test
     void testMoveRoverByInstructions_EmptyInstructions() {
