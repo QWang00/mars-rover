@@ -48,7 +48,7 @@ public class Rover {
         this.plateau = plateau;
     }
 
-    public void move() {
+    public void moveForward() {
         RoverPosition pos = this.getPosition();
         CompassDirection facing = pos.getFacing();
 
@@ -133,7 +133,7 @@ public class Rover {
     protected void processInstruction(Instruction instruction, Rover rover) {
         CompassDirection currentFacing;
         if(instruction == Instruction.M){
-            rover.move();
+            rover.moveForward();
         }
         currentFacing = rover.getPosition().getFacing();
         CompassDirection newFacingDirection = changeFacingDirection(currentFacing, instruction);
