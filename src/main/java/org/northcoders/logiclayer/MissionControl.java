@@ -99,22 +99,28 @@ public class MissionControl {
     }
 
 
-    public CompassDirection moveRover(String roverID, List<Instruction> instructions) {
+    public CompassDirection moveRoverByInstructions(String roverID, List<Instruction> instructions) {
         Rover rover = rovers.get(roverID);
         CompassDirection currentFacing = null;
 
         for (Instruction instruction : instructions){
-            if(instruction == Instruction.M){
-                rover.move();
-            }
+            processInstruction(instruction, rover);
             currentFacing = rover.getPosition().getFacing();
-            CompassDirection newFacingDirection = changeFacingDirection(currentFacing, instruction);
-            rover.getPosition().setFacing(newFacingDirection);
 
         }
         return currentFacing;
     }
 
+    private void processInstruction(Instruction instruction, Rover rover) {
+        CompassDirection currentFacing;
+        if(instruction == Instruction.M){
+            rover.move();
+        }
+        currentFacing = rover.getPosition().getFacing();
+        CompassDirection newFacingDirection = changeFacingDirection(currentFacing, instruction);
+        rover.getPosition().setFacing(newFacingDirection);
+
+    }
 
 
     public Map<String, Rover> getRovers() {
