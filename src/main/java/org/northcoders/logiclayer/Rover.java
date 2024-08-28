@@ -87,42 +87,47 @@ public class Rover {
         }
     }
 
-    public CompassDirection changeFacingDirection(CompassDirection originalFacing, Instruction instruction) {
-        if (instruction == null || originalFacing == null) throw new NullPointerException();
-        switch (originalFacing) {
-            case N -> {
-                if (instruction.equals(Instruction.R)) {
-                    return CompassDirection.E;
-                } else if (instruction.equals(Instruction.L)) {
-                    return CompassDirection.W;
-                }
-            }
-            case S -> {
-                if (instruction.equals(Instruction.R)) {
-                    return CompassDirection.W;
-                } else if (instruction.equals(Instruction.L)) {
-                    return CompassDirection.E;
-                }
-            }
-            case W -> {
-                if (instruction.equals(Instruction.R)) {
-                    return CompassDirection.N;
-                } else if (instruction.equals(Instruction.L)) {
-                    return CompassDirection.S;
-                }
-            }
-            case E -> {
-                if (instruction.equals(Instruction.R)) {
-                    return CompassDirection.S;
-                } else if (instruction.equals(Instruction.L)) {
-                    return CompassDirection.N;
-                }
-            }
-            default -> {
+    private CompassDirection changeFacingDirection(CompassDirection originalFacing, Instruction instruction) {
+        if (instruction == null || originalFacing == null) throw new NullPointerException("Arguments cannot be null");
+
+        switch (instruction) {
+            case R:
+                return turnRight(originalFacing);
+            case L:
+                return turnLeft(originalFacing);
+            default:
                 return originalFacing;
-            }
         }
-        return originalFacing;
+    }
+
+    private CompassDirection turnRight(CompassDirection currentFacing) {
+        switch (currentFacing) {
+            case N:
+                return CompassDirection.E;
+            case S:
+                return CompassDirection.W;
+            case W:
+                return CompassDirection.N;
+            case E:
+                return CompassDirection.S;
+            default:
+                return currentFacing;
+        }
+    }
+
+    private CompassDirection turnLeft(CompassDirection currentFacing) {
+        switch (currentFacing) {
+            case N:
+                return CompassDirection.W;
+            case S:
+                return CompassDirection.E;
+            case W:
+                return CompassDirection.S;
+            case E:
+                return CompassDirection.N;
+            default:
+                return currentFacing;
+        }
     }
 
     protected void processInstruction(Instruction instruction, Rover rover) {
