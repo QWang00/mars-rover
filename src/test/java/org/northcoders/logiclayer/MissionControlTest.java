@@ -6,7 +6,6 @@ import org.northcoders.inputlayer.CompassDirection;
 import org.northcoders.inputlayer.Instruction;
 import org.northcoders.inputlayer.RoverPosition;
 
-import javax.swing.text.Position;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -151,18 +150,60 @@ class MissionControlTest {
     }
 
     @Test
-    void testMoveRover_RoverIDNotInMap() {
+    void testMoveRover_RoverByInstructionsIDNotInMap() {
         Rover rover = new Rover.RoverBuilder()
                 .robotID("R1")
                 .name("Rover1")
                 .build();
         List<Instruction> instructions = new ArrayList<>(){};
         instructions.add(Instruction.R);
-        assertThrows(NullPointerException.class,()->missionControl.moveRover("R1", instructions));
+        assertThrows(NullPointerException.class,()->missionControl.moveRoverByInstructions("R1", instructions));
+    }
+
+
+    @Test
+    void testProcessInstruction_TurnLeft() {
+        Rover rover = new Rover.RoverBuilder()
+                .robotID("R1")
+                .name("Rover1")
+                .plateau(new Plateau(new int[]{10,6}, "P1"))
+                .position(new RoverPosition(6,5,CompassDirection.S))
+                .build();
+
+        missionControl.processInstruction(Instruction.L, rover);
+        assertEquals(CompassDirection.E, rover.getPosition().getFacing());
     }
 
     @Test
-    void testMoveRover_EmptyInstructions() {
+    void testProcessInstruction_TurnRight() {
+        Rover rover = new Rover.RoverBuilder()
+                .robotID("R1")
+                .name("Rover1")
+                .plateau(new Plateau(new int[]{10,6}, "P1"))
+                .position(new RoverPosition(6,5,CompassDirection.S))
+                .build();
+
+        missionControl.processInstruction(Instruction.R, rover);
+        assertEquals(CompassDirection.W, rover.getPosition().getFacing());
+    }
+
+    @Test
+    void testProcessInstruction_MoveForward() {
+        Rover rover = new Rover.RoverBuilder()
+                .robotID("R1")
+                .name("Rover1")
+                .plateau(new Plateau(new int[]{10,6}, "P1"))
+                .position(new RoverPosition(6,5,CompassDirection.N))
+                .build();
+
+        missionControl.processInstruction(Instruction.M, rover);
+        assertEquals(6, rover.getPosition().getX());
+        assertEquals(6, rover.getPosition().getY());
+    }
+
+
+    @Test
+    void testMoveRoverByInstructions_EmptyInstructions() {
         Rover rover = new Rover.RoverBuilder()
                 .robotID("R1")
                 .name("Rover1")
@@ -172,13 +213,13 @@ class MissionControlTest {
         missionControl.getRovers().put("R1", rover);
 
         List<Instruction> instructions = new ArrayList<>(){};
-        missionControl.moveRover("R1", instructions);
+        missionControl.moveRoverByInstructions("R1", instructions);
         assertEquals(6,rover.getPosition().getX());
         assertEquals(5,rover.getPosition().getY());
     }
 
     @Test
-    void testMoveRover_SingleInstruction() {
+    void testMoveRoverByInstructions_SingleInstruction() {
         Rover rover = new Rover.RoverBuilder()
                 .robotID("R1")
                 .name("Rover1")
@@ -189,7 +230,7 @@ class MissionControlTest {
 
         List<Instruction> instructions = new ArrayList<>(){};
         instructions.add(Instruction.R);
-        missionControl.moveRover("R1", instructions);
+        missionControl.moveRoverByInstructions("R1", instructions);
         assertEquals(6,rover.getPosition().getX());
         assertEquals(5,rover.getPosition().getY());
         assertEquals(CompassDirection.W, rover.getPosition().getFacing());
@@ -197,7 +238,7 @@ class MissionControlTest {
     }
 
     @Test
-    void testMoveRover_MultipleInstructions() {
+    void testMoveRoverByInstructions_MultipleInstructions() {
         Rover rover = new Rover.RoverBuilder()
                 .robotID("R1")
                 .name("Rover1")
@@ -212,7 +253,7 @@ class MissionControlTest {
         instructions.add(Instruction.L);
         instructions.add(Instruction.R);
         instructions.add(Instruction.M);
-        missionControl.moveRover("R1", instructions);
+        missionControl.moveRoverByInstructions("R1", instructions);
         assertEquals(2,rover.getPosition().getX());
         assertEquals(3,rover.getPosition().getY());
         assertEquals(CompassDirection.S, rover.getPosition().getFacing());
