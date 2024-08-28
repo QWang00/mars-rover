@@ -49,42 +49,32 @@ public class Rover {
     }
 
     public void moveForward() {
+        RoverPosition newPosition = calculateNewPosition();
+
+        if (newPosition.getX() < 1 || newPosition.getX() > plateau.getMaxX() ||
+                newPosition.getY() < 1 || newPosition.getY() > plateau.getMaxY()) {
+            System.out.println("Warning: Rover is at the edge and cannot move further, please change direction!");
+            return;
+        }
+
+
+
+        setPosition(newPosition);
+    }
+
+    protected RoverPosition calculateNewPosition() {
         RoverPosition pos = this.getPosition();
         CompassDirection facing = pos.getFacing();
-
         int x = pos.getX();
         int y = pos.getY();
 
         switch (facing) {
-            case N:
-                if (y < plateau.getMaxY()) {
-                    pos.setY(y + 1);
-                } else {
-                    System.out.println("Warning: Rover is at the top edge and cannot move further, please change direction!");
-                }
-                break;
-            case S:
-                if (y > 1) {
-                    pos.setY(y - 1);
-                } else {
-                    System.out.println("Warning: Rover is at the bottom edge and cannot move further, please change direction!");
-                }
-                break;
-            case E:
-                if (x < plateau.getMaxX()) {
-                    pos.setX(x + 1);
-                } else {
-                    System.out.println("Warning: Rover is at the right edge and cannot move further, please change direction!");
-                }
-                break;
-            case W:
-                if (x > 1) {
-                    pos.setX(x - 1);
-                } else {
-                    System.out.println("Warning: Rover is at the left edge and cannot move further, please change direction!");
-                }
-                break;
+            case N -> y++;
+            case S -> y--;
+            case E -> x++;
+            case W -> x--;
         }
+        return new RoverPosition(x, y, facing);
     }
 
     protected CompassDirection changeFacingDirection(CompassDirection originalFacing, Instruction instruction) {
