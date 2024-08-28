@@ -111,7 +111,7 @@ public class MissionControl {
         return currentFacing;
     }
 
-    private void processInstruction(Instruction instruction, Rover rover) {
+    protected void processInstruction(Instruction instruction, Rover rover) {
         CompassDirection currentFacing;
         if(instruction == Instruction.M){
             rover.move();
