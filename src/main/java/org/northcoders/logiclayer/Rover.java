@@ -87,7 +87,7 @@ public class Rover {
         }
     }
 
-    private CompassDirection changeFacingDirection(CompassDirection originalFacing, Instruction instruction) {
+    protected CompassDirection changeFacingDirection(CompassDirection originalFacing, Instruction instruction) {
         if (instruction == null || originalFacing == null) throw new NullPointerException("Arguments cannot be null");
 
         switch (instruction) {
@@ -100,7 +100,7 @@ public class Rover {
         }
     }
 
-    private CompassDirection turnRight(CompassDirection currentFacing) {
+    protected CompassDirection turnRight(CompassDirection currentFacing) {
         switch (currentFacing) {
             case N:
                 return CompassDirection.E;
@@ -115,7 +115,7 @@ public class Rover {
         }
     }
 
-    private CompassDirection turnLeft(CompassDirection currentFacing) {
+    protected CompassDirection turnLeft(CompassDirection currentFacing) {
         switch (currentFacing) {
             case N:
                 return CompassDirection.W;
