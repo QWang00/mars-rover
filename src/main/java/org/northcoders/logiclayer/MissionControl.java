@@ -62,7 +62,16 @@ public class MissionControl {
     }
 
     public boolean isPositionOccupied(Rover roverToCheck, RoverPosition position){
-
+        if(!rovers.contains(roverToCheck)) throw new IllegalArgumentException("This Rover is not in control of Mission Control");
+        for (Rover rover : this.getRovers()) {
+            int roverX = rover.getPosition().getX();
+            int roverY = rover.getPosition().getY();
+            if (!roverToCheck.equals(rover) &&
+                    roverX == position.getX() &&
+                    roverY == position.getY()) {
+                return true;
+            }
+        }
         return false;
     }
 }
