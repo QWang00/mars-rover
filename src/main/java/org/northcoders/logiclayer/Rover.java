@@ -163,8 +163,6 @@ public class Rover {
 
     }
 
-    private boolean isPositionOccupied(RoverPosition newPosition) {
-        return false;
-    }
+
 
 }
