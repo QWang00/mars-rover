@@ -21,8 +21,6 @@ class MissionControlTest {
     void setUp() {
         missionControl = new MissionControl();
         rover = new Rover.RoverBuilder().build();
-
-
     }
 
 
@@ -61,7 +59,7 @@ class MissionControlTest {
         }
 
         @Test
-        void testLandRoverToPlateau_RoverNotInList() {
+        void testLandRoverToPlateau_RoverNotInControl() {
 
             RoverPosition position = new RoverPosition(10, 3, CompassDirection.S);
             Plateau plateau = new Plateau(new int[]{15, 7}, "P1");
@@ -94,7 +92,7 @@ class MissionControlTest {
     @Nested
     class testGetRoverPosition {
         @Test
-        void testGetRoverPosition_RoverNotInList() {
+        void testGetRoverPosition_RoverNotInControl() {
             assertThrows(NullPointerException.class, () -> missionControl.getRoverPosition(rover));
         }
 
@@ -112,7 +110,7 @@ class MissionControlTest {
     @Nested
     class testMoveRoverByInstructions {
         @Test
-        void testMoveRoverByInstructions_RoverIDNotInList() {
+        void testMoveRoverByInstructions_RoverIDNotInControl() {
 
             List<Instruction> instructions = new ArrayList<>() {};
             instructions.add(Instruction.R);
@@ -166,5 +164,7 @@ class MissionControlTest {
 
         }
     }
+
+
 
 }
