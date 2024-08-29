@@ -4,6 +4,7 @@ import org.northcoders.inputlayer.CompassDirection;
 import org.northcoders.inputlayer.Instruction;
 import org.northcoders.inputlayer.RoverPosition;
 
+import javax.swing.text.Position;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,12 +22,13 @@ public class MissionControl {
     }
 
     public void addRover (Rover rover){
+        if(rover == null) throw new NullPointerException("Rover cannot be null");
         rovers.add(rover);
     }
 
     public void landRoverToPlateau(Rover rover, RoverPosition position, Plateau plateau) {
         if (rover == null || position == null || plateau == null)
-            throw new IllegalArgumentException();
+            throw new NullPointerException();
         if (!rovers.contains(rover)) throw new IllegalArgumentException();
 
         rover.setPlateau(plateau);
@@ -35,11 +37,9 @@ public class MissionControl {
 
 
     public RoverPosition getRoverPosition(Rover rover) {
-        try {
-            return rover.getPosition();
-        } catch (NullPointerException e) {
-            throw new NullPointerException();
-        }
+        if(!rovers.contains(rover)) throw new NullPointerException("Rover is not in the list");
+        else{return rover.getPosition();}
+
     }
 
     public CompassDirection moveRoverByInstructions(Rover rover, List<Instruction> instructions) {
@@ -59,5 +59,10 @@ public class MissionControl {
 
     public void setRovers(List<Rover> rovers) {
         this.rovers = rovers;
+    }
+
+    public boolean isPositionOccupied(Rover roverToCheck, RoverPosition position){
+
+        return false;
     }
 }
