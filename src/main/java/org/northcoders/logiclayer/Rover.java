@@ -136,7 +136,7 @@ public class Rover {
         private RoverPosition position;
         private Plateau plateau;
 
-        public RoverBuilder robotID(String roverID) {
+        public RoverBuilder roverId(String roverID) {
             this.roverID = roverID;
             return this;
         }
