@@ -14,14 +14,11 @@ public class MissionControl {
 
 
     private Map<String, Rover> rovers;
-    List<Plateau> plateaus;
+
 
     public MissionControl() {
-        this.plateaus = new ArrayList<>();
         this.rovers = new HashMap<>();
     }
-
-
 
     public void addRover (String id, String name){
         if(id==null || id.equals("") || name==null || name.equals("")) throw new IllegalArgumentException();
@@ -42,14 +39,6 @@ public class MissionControl {
         rover.setPosition(position);
         }
 
-
-    public List<Plateau> getPlateaus() {
-        return plateaus;
-    }
-
-    public void setPlateaus(List<Plateau> plateaus) {
-        this.plateaus = plateaus;
-    }
 
     public RoverPosition getRoverPosition(String roverID) {
         try {
