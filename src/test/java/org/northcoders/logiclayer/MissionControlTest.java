@@ -16,7 +16,6 @@ class MissionControlTest {
     MissionControl missionControl;
     Rover rover;
 
-
     @BeforeEach
     void setUp() {
         missionControl = new MissionControl();
@@ -165,6 +164,54 @@ class MissionControlTest {
         }
     }
 
+    @Nested
+    class testIsPositionOccupied {
+        RoverPosition occupiedPosition;
+        RoverPosition currentPosition;
+        Rover roverOccupying;
+        Plateau plateau;
 
+        @BeforeEach
+        void setUp(){
+            plateau = new Plateau(new int[] {14, 14}, "P1");
+
+            occupiedPosition = new RoverPosition(1, 2, CompassDirection.N);
+            roverOccupying = new Rover.RoverBuilder().plateau(plateau).position(occupiedPosition).build();
+
+           rover.setPlateau(plateau);
+           currentPosition = new RoverPosition(5, 6, CompassDirection.S);
+           rover.setPosition(currentPosition);
+        }
+        @Test
+        public void testIsPositionOccupied_RoverNotInControl() {
+
+            assertThrows(IllegalArgumentException.class, () -> {
+                missionControl.isPositionOccupied(rover, occupiedPosition);
+            });
+        }
+
+        @Test
+        public void testIsPositionOccupied_PositionOccupiedByAnotherRover() {
+            missionControl.addRover(rover);
+            missionControl.addRover(roverOccupying);
+            assertTrue(missionControl.isPositionOccupied(rover, occupiedPosition));
+        }
+
+        @Test
+        public void testIsPositionOccupied_PositionNotOccupied() {
+            missionControl.addRover(rover);
+            assertFalse(missionControl.isPositionOccupied(rover, occupiedPosition));
+        }
+
+        @Test
+        public void testIsPositionOccupied_SameRoverPosition() {
+            missionControl.addRover(rover);
+            missionControl.addRover(roverOccupying);
+            assertFalse(missionControl.isPositionOccupied(rover, currentPosition));
+        }
+
+
+
+    }
 
 }
