@@ -65,11 +65,6 @@ class MissionControlTest {
 
             RoverPosition position = new RoverPosition(10, 3, CompassDirection.S);
             Plateau plateau = new Plateau(new int[]{15, 7}, "P1");
-            //TODO: delete
-//            Rover rover = new Rover.RoverBuilder()
-//                    .roverId("R1")
-//                    .name("Rover1")
-//                    .build();
             assertThrows(IllegalArgumentException.class, () -> missionControl.landRoverToPlateau(rover, position, plateau));
 
         }
