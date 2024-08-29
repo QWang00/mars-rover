@@ -13,44 +13,36 @@ import java.util.Map;
 public class MissionControl {
 
 
-    private Map<String, Rover> rovers;
+    private List<Rover> rovers;
 
 
     public MissionControl() {
-        this.rovers = new HashMap<>();
+        this.rovers = new ArrayList<>();
     }
 
-    public void addRover (String id, String name){
-        if(id==null || id.equals("") || name==null || name.equals("")) throw new IllegalArgumentException();
-        Rover rover = new Rover.RoverBuilder()
-                .robotID(id)
-                .name(name)
-                .build();
-        rovers.put(id, rover);
+    public void addRover (Rover rover){
+        rovers.add(rover);
     }
 
-    public void landRoverToPlateau(String roverID, RoverPosition position, Plateau plateau) {
-        if (roverID == null || roverID.equals("") || position == null || plateau == null)
+    public void landRoverToPlateau(Rover rover, RoverPosition position, Plateau plateau) {
+        if (rover == null || position == null || plateau == null)
             throw new IllegalArgumentException();
-        if (!rovers.containsKey(roverID)) throw new IllegalArgumentException();
+        if (!rovers.contains(rover)) throw new IllegalArgumentException();
 
-        Rover rover = rovers.get(roverID);
         rover.setPlateau(plateau);
         rover.setPosition(position);
         }
 
 
-    public RoverPosition getRoverPosition(String roverID) {
+    public RoverPosition getRoverPosition(Rover rover) {
         try {
-            Rover rover = rovers.get(roverID);
             return rover.getPosition();
         } catch (NullPointerException e) {
             throw new NullPointerException();
         }
     }
 
-    public CompassDirection moveRoverByInstructions(String roverID, List<Instruction> instructions) {
-        Rover rover = rovers.get(roverID);
+    public CompassDirection moveRoverByInstructions(Rover rover, List<Instruction> instructions) {
         CompassDirection currentFacing = null;
 
         for (Instruction instruction : instructions){
@@ -61,11 +53,11 @@ public class MissionControl {
         return currentFacing;
     }
 
-    public Map<String, Rover> getRovers() {
+    public List<Rover> getRovers() {
         return rovers;
     }
 
-    public void setRovers(Map<String, Rover> rovers) {
+    public void setRovers(List<Rover> rovers) {
         this.rovers = rovers;
     }
 }
