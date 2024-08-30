@@ -1,13 +1,11 @@
-package org.northcoders.logiclayer;
+package org.northcoders.logic;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.northcoders.inputlayer.CompassDirection;
-import org.northcoders.inputlayer.Instruction;
-import org.northcoders.inputlayer.RoverPosition;
-
-import javax.swing.text.Position;
+import org.northcoders.input.CompassDirection;
+import org.northcoders.input.Instruction;
+import org.northcoders.input.RoverPosition;
 
 import static org.junit.jupiter.api.Assertions.*;
 

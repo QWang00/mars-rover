@@ -1,4 +1,4 @@
-package org.northcoders.logiclayer;
+package org.northcoders.logic;
 
 public class InvalidPositionException extends RuntimeException{
     public InvalidPositionException() {

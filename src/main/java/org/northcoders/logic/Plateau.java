@@ -1,6 +1,4 @@
-package org.northcoders.logiclayer;
-
-import org.northcoders.inputlayer.PlateauSize;
+package org.northcoders.logic;
 
 public class Plateau{
     private int maxX;

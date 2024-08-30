@@ -1,14 +1,11 @@
-package org.northcoders.logiclayer;
+package org.northcoders.logic;
 
-import org.northcoders.inputlayer.CompassDirection;
-import org.northcoders.inputlayer.Instruction;
-import org.northcoders.inputlayer.RoverPosition;
+import org.northcoders.input.CompassDirection;
+import org.northcoders.input.Instruction;
+import org.northcoders.input.RoverPosition;
 
-import javax.swing.text.Position;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class MissionControl {
