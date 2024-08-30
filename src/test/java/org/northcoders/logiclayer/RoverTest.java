@@ -7,6 +7,8 @@ import org.northcoders.inputlayer.CompassDirection;
 import org.northcoders.inputlayer.Instruction;
 import org.northcoders.inputlayer.RoverPosition;
 
+import javax.swing.text.Position;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RoverTest {
@@ -168,101 +170,114 @@ class RoverTest {
 
     @Nested
     class testMoveForward {
-        @Test
-        public void testMoveForward_FromNorthOnTopLeftEdge() {
-            Plateau plateau = new Plateau(new int[]{10, 6}, "P1");
-            Rover rover = new Rover.RoverBuilder()
-                    .position(new RoverPosition(7, 6, CompassDirection.N))
-                    .plateau(plateau)
-                    .build();
-            rover.moveForward();
-            assertEquals(7, rover.getPosition().getX());
-            assertEquals(6, rover.getPosition().getY());
-        }
+        MissionControl missionControl;
+        Rover rover;
+        RoverPosition currentPosition;
+        Plateau plateau;
 
-        @Test
-        public void testMoveForward_FromSouthOnBottomLeftEdge() {
-            Plateau plateau = new Plateau(new int[]{10, 6}, "P1");
-            Rover rover = new Rover.RoverBuilder()
-                    .position(new RoverPosition(2, 1, CompassDirection.S))
-                    .plateau(plateau)
-                    .build();
-            rover.moveForward();
-            assertEquals(2, rover.getPosition().getX());
-            assertEquals(1, rover.getPosition().getY());
+        @BeforeEach
+        void setUp(){
+            missionControl = new MissionControl();
+            plateau = new Plateau(new int[]{14, 14}, "P1");
+            rover = new Rover.RoverBuilder().plateau(plateau).build();
         }
-
         @Test
-        public void testMoveForward_FromEastOnBottomRightEdge() {
-            Plateau plateau = new Plateau(new int[]{10, 6}, "P1");
-            Rover rover = new Rover.RoverBuilder()
-                    .position(new RoverPosition(10, 6, CompassDirection.E))
-                    .plateau(plateau)
-                    .build();
-            rover.moveForward();
+        void testMoveForward_HitPlateauTopLeftEdge() {
+
+            currentPosition = new RoverPosition(10, 14, CompassDirection.N);
+            rover.setPosition(currentPosition);
+            rover.moveForward(missionControl);
             assertEquals(10, rover.getPosition().getX());
-            assertEquals(6, rover.getPosition().getY());
+            assertEquals(14, rover.getPosition().getY());
+            assertEquals(CompassDirection.N, rover.getPosition().getFacing());
+
         }
 
         @Test
-        public void testMoveForward_FromWestOnTopRightEdge() {
-            Plateau plateau = new Plateau(new int[]{10, 6}, "P1");
-            Rover rover = new Rover.RoverBuilder()
-                    .position(new RoverPosition(1, 6, CompassDirection.W))
-                    .plateau(plateau)
-                    .build();
-            rover.moveForward();
+        void testMoveForward_HitPlateauTopRightEdge() {
+            currentPosition = new RoverPosition(14, 10, CompassDirection.E);
+            rover.setPosition(currentPosition);
+            rover.moveForward(missionControl);
+            assertEquals(14, rover.getPosition().getX());
+            assertEquals(10, rover.getPosition().getY());
+            assertEquals(CompassDirection.E, rover.getPosition().getFacing());
+        }
+
+        @Test
+        void testMoveForward_HitPlateauBottomLeftEdge() {
+            currentPosition = new RoverPosition(1, 10, CompassDirection.W);
+            rover.setPosition(currentPosition);
+            rover.moveForward(missionControl);
             assertEquals(1, rover.getPosition().getX());
-            assertEquals(6, rover.getPosition().getY());
-
+            assertEquals(10, rover.getPosition().getY());
+            assertEquals(CompassDirection.W, rover.getPosition().getFacing());
         }
 
         @Test
-        public void testMoveForward_FromNorthNotOnEdge() {
-            Plateau plateau = new Plateau(new int[]{10, 6}, "P1");
-            Rover rover = new Rover.RoverBuilder()
-                    .position(new RoverPosition(3, 5, CompassDirection.N))
-                    .plateau(plateau)
-                    .build();
-            rover.moveForward();
-            assertEquals(3, rover.getPosition().getX());
-            assertEquals(6, rover.getPosition().getY());
+        void testMoveForward_HitPlateauBottomRightEdge() {
+            currentPosition = new RoverPosition(10, 1, CompassDirection.S);
+            rover.setPosition(currentPosition);
+            rover.moveForward(missionControl);
+            assertEquals(10, rover.getPosition().getX());
+            assertEquals(1, rover.getPosition().getY());
+            assertEquals(CompassDirection.S, rover.getPosition().getFacing());
         }
 
         @Test
-        public void testMoveForward_FromSouthNotOnEdge() {
-            Plateau plateau = new Plateau(new int[]{10, 6}, "P1");
-            Rover rover = new Rover.RoverBuilder()
-                    .position(new RoverPosition(7, 6, CompassDirection.S))
+        void testMoveForward_PositionOccupiedByAnotherRover() {
+            rover.setPosition(new RoverPosition(3, 3, CompassDirection.N));
+
+            Rover rover2 = new Rover.RoverBuilder()
                     .plateau(plateau)
+                    .position(new RoverPosition(3, 4, CompassDirection.N))
                     .build();
-            rover.moveForward();
-            assertEquals(7, rover.getPosition().getX());
-            assertEquals(5, rover.getPosition().getY());
+
+            missionControl.addRover(rover);
+            missionControl.addRover(rover2);
+
+            IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
+                rover.moveForward(missionControl);
+            });
+
+            assertEquals("Cannot move forward; position is occupied by another rover.", exception.getMessage());
         }
 
         @Test
-        public void testMoveForward_FromWestNotOnEdge() {
-            Plateau plateau = new Plateau(new int[]{10, 6}, "P1");
-            Rover rover = new Rover.RoverBuilder()
-                    .position(new RoverPosition(7, 6, CompassDirection.W))
-                    .plateau(plateau)
-                    .build();
-            rover.moveForward();
-            assertEquals(6, rover.getPosition().getX());
-            assertEquals(6, rover.getPosition().getY());
+        void testMoveForward_SingleRoverInPlateau() {
+            rover.setPosition(new RoverPosition(3, 3, CompassDirection.E));
+
+            missionControl.addRover(rover);
+            rover.moveForward(missionControl);
+
+            assertEquals(4, rover.getPosition().getX());
+            assertEquals(3, rover.getPosition().getY());
+            assertEquals(CompassDirection.E, rover.getPosition().getFacing());
         }
 
+
         @Test
-        public void testMoveForward_FromEastNotOnEdge() {
-            Plateau plateau = new Plateau(new int[]{10, 6}, "P1");
-            Rover rover = new Rover.RoverBuilder()
-                    .position(new RoverPosition(7, 6, CompassDirection.E))
+        void testMoveForward_NoCollisionWithOtherRoversMoving() {
+            // Setup two rovers far away from each other
+            rover.setPosition(new RoverPosition(3, 3, CompassDirection.W));
+
+            Rover rover2 = new Rover.RoverBuilder()
                     .plateau(plateau)
+                    .position(new RoverPosition(5, 5, CompassDirection.S))
                     .build();
-            rover.moveForward();
-            assertEquals(8, rover.getPosition().getX());
-            assertEquals(6, rover.getPosition().getY());
+
+            missionControl.addRover(rover);
+            missionControl.addRover(rover2);
+
+            rover.moveForward(missionControl);
+            rover2.moveForward(missionControl);
+
+            assertEquals(2, rover.getPosition().getX());
+            assertEquals(3, rover.getPosition().getY());
+            assertEquals(CompassDirection.W, rover.getPosition().getFacing());
+
+            assertEquals(5, rover2.getPosition().getX());
+            assertEquals(4, rover2.getPosition().getY());
+            assertEquals(CompassDirection.S, rover2.getPosition().getFacing());
         }
     }
 
