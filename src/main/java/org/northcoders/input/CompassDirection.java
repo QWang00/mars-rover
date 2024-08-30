@@ -1,4 +1,4 @@
-package org.northcoders.inputlayer;
+package org.northcoders.input;
 
 public enum CompassDirection {
     N,

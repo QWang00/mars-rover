@@ -1,4 +1,4 @@
-package org.northcoders.inputlayer;
+package org.northcoders.input;
 
 public class RoverPosition {
     private int x;
