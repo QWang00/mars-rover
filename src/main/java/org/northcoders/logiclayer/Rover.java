@@ -81,13 +81,17 @@ public class Rover {
         this.plateau = plateau;
     }
 
-    public void moveForward() {
+    public void moveForward(MissionControl missionControl) {
         RoverPosition newPosition = calculateNewPosition();
 
         if (newPosition.getX() < 1 || newPosition.getX() > plateau.getMaxX() ||
                 newPosition.getY() < 1 || newPosition.getY() > plateau.getMaxY()) {
             System.out.println("Warning: Rover is at the edge and cannot move further, please change direction!");
             return;
+        }
+
+        if (missionControl.isPositionOccupied(this, newPosition)) {
+            throw new IllegalStateException("Cannot move forward; position is occupied by another rover.");
         }
 
         setPosition(newPosition);
@@ -154,7 +158,7 @@ public class Rover {
     protected void processInstruction(Instruction instruction, Rover rover) {
         CompassDirection currentFacing;
         if(instruction == Instruction.M){
-            rover.moveForward();
+            rover.moveForward(new MissionControl());
         }
         currentFacing = rover.getPosition().getFacing();
         CompassDirection newFacingDirection = changeFacingDirection(currentFacing, instruction);
