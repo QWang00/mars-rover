@@ -17,6 +17,39 @@ public class Rover {
         this.plateau = builder.plateau;
     }
 
+    public static class RoverBuilder {
+        private String roverID;
+        private String name;
+        private RoverPosition position;
+        private Plateau plateau;
+
+        public RoverBuilder roverId(String roverID) {
+            this.roverID = roverID;
+            return this;
+        }
+
+        public RoverBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public RoverBuilder position(RoverPosition position) {
+            this.position = position;
+            return this;
+        }
+
+        public RoverBuilder plateau(Plateau plateau){
+            this.plateau = plateau;
+            return this;
+        }
+
+        public Rover build() {
+            return new Rover(this);
+        }
+
+
+    }
+
     public String getRoverID() {
         return roverID;
     }
@@ -130,38 +163,7 @@ public class Rover {
     }
 
 
-    public static class RoverBuilder {
-        private String roverID;
-        private String name;
-        private RoverPosition position;
-        private Plateau plateau;
 
-        public RoverBuilder roverId(String roverID) {
-            this.roverID = roverID;
-            return this;
-        }
-
-        public RoverBuilder name(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public RoverBuilder position(RoverPosition position) {
-            this.position = position;
-            return this;
-        }
-
-        public RoverBuilder plateau(Plateau plateau){
-            this.plateau = plateau;
-            return this;
-        }
-
-        public Rover build() {
-            return new Rover(this);
-        }
-
-
-    }
 
 
 
