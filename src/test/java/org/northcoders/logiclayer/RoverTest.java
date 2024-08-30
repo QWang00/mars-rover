@@ -1,5 +1,6 @@
 package org.northcoders.logiclayer;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.northcoders.inputlayer.CompassDirection;
@@ -10,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RoverTest {
     @Nested
-    class testRoverBuilder{
+    class testRoverBuilder {
         @Test
         public void testRoverBuilder_SetsFinalFieldsCorrectly() {
             Rover rover = new Rover.RoverBuilder()
@@ -39,7 +40,7 @@ class RoverTest {
     }
 
     @Nested
-    class testGetPosition{
+    class testGetPosition {
         @Test
         public void getPosition_PositionExceedsPlateauDimension() {
             Plateau plateau = new Plateau(new int[]{4, 5}, "P1");
@@ -72,7 +73,101 @@ class RoverTest {
     }
 
     @Nested
-    class testMoveForward{
+    class testCalculateNewPosition {
+        Rover rover;
+
+        @BeforeEach
+        void setUp() {
+            rover = new Rover.RoverBuilder().plateau(new Plateau(new int[]{14, 14}, "P1")).build();
+        }
+
+        @Test
+        public void testCalculateNewPosition_FacingNorth() {
+            rover.setPosition(new RoverPosition(3, 3, CompassDirection.N));
+
+            RoverPosition newPosition = rover.calculateNewPosition();
+            assertEquals(3, newPosition.getX());
+            assertEquals(4, newPosition.getY());
+            assertEquals(CompassDirection.N, newPosition.getFacing());
+        }
+
+        @Test
+        public void testCalculateNewPosition_FacingSouth() {
+            rover.setPosition(new RoverPosition(3, 3, CompassDirection.S));
+
+            RoverPosition newPosition = rover.calculateNewPosition();
+            assertEquals(3, newPosition.getX());
+            assertEquals(2, newPosition.getY());
+            assertEquals(CompassDirection.S, newPosition.getFacing());
+        }
+
+        @Test
+        public void testCalculateNewPosition_FacingEast() {
+            rover.setPosition(new RoverPosition(3, 3, CompassDirection.E));
+            RoverPosition newPosition = rover.calculateNewPosition();
+            assertEquals(4, newPosition.getX());
+            assertEquals(3, newPosition.getY());
+            assertEquals(CompassDirection.E, newPosition.getFacing());
+        }
+
+        @Test
+        public void testCalculateNewPosition_FacingWest() {
+            rover.setPosition(new RoverPosition(3, 3, CompassDirection.W));
+            RoverPosition newPosition = rover.calculateNewPosition();
+            assertEquals(2, newPosition.getX());
+            assertEquals(3, newPosition.getY());
+            assertEquals(CompassDirection.W, newPosition.getFacing());
+        }
+
+
+        @Test
+        public void testCalculateNewPosition_FacingNorthAtTopEdge() {
+            Rover rover = new Rover.RoverBuilder()
+                    .position(new RoverPosition(1, 14, CompassDirection.N))
+                    .build();
+            RoverPosition newPosition = rover.calculateNewPosition();
+            assertEquals(1, newPosition.getX());
+            assertEquals(15, newPosition.getY());
+            assertEquals(CompassDirection.N, newPosition.getFacing());
+        }
+
+        @Test
+        public void testCalculateNewPosition_FacingSouthAtBottomEdge() {
+            Rover rover = new Rover.RoverBuilder()
+                    .position(new RoverPosition(1, 1, CompassDirection.S))
+                    .build();
+            RoverPosition newPosition = rover.calculateNewPosition();
+            assertEquals(1, newPosition.getX());
+            assertEquals(0, newPosition.getY());
+            assertEquals(CompassDirection.S, newPosition.getFacing());
+        }
+
+        @Test
+        public void testCalculateNewPosition_FacingWestAtBottomEdge() {
+            Rover rover = new Rover.RoverBuilder()
+                    .position(new RoverPosition(1, 1, CompassDirection.W))
+                    .build();
+            RoverPosition newPosition = rover.calculateNewPosition();
+            assertEquals(0, newPosition.getX());
+            assertEquals(1, newPosition.getY());
+            assertEquals(CompassDirection.W, newPosition.getFacing());
+        }
+
+        @Test
+        public void testCalculateNewPosition_FacingEastAtBottomEdge() {
+            Rover rover = new Rover.RoverBuilder()
+                    .position(new RoverPosition(14, 1, CompassDirection.E))
+                    .build();
+            RoverPosition newPosition = rover.calculateNewPosition();
+            assertEquals(15, newPosition.getX());
+            assertEquals(1, newPosition.getY());
+            assertEquals(CompassDirection.E, newPosition.getFacing());
+        }
+    }
+
+
+    @Nested
+    class testMoveForward {
         @Test
         public void testMoveForward_FromNorthOnTopLeftEdge() {
             Plateau plateau = new Plateau(new int[]{10, 6}, "P1");
@@ -204,7 +299,7 @@ class RoverTest {
     }
 
     @Nested
-    class testTurnLeft{
+    class testTurnLeft {
         @Test
         void testTurnLeft_FromNorth() {
             Rover rover = new Rover.RoverBuilder()
@@ -235,7 +330,7 @@ class RoverTest {
     }
 
     @Nested
-    class testChangeFacingDirection{
+    class testChangeFacingDirection {
         @Test
         public void testChangeFacingDirection_NullInstruction() {
             Rover rover = new Rover.RoverBuilder().build();
@@ -303,6 +398,7 @@ class RoverTest {
             assertEquals(CompassDirection.N, rover.changeFacingDirection(originalFacing, Instruction.R));
         }
     }
-
 }
+
+
 
