@@ -215,4 +215,57 @@ class MissionControlTest {
 
     }
 
+    @Nested
+    class testIsPositionOutOfRange{
+        private Plateau plateau;
+        private Rover rover1;
+        private Rover rover2;
+        @BeforeEach
+        public void setUp() {
+            missionControl = new MissionControl();
+            plateau = new Plateau(new int[]{5,5}, "P1"); // Example plateau size
+            missionControl.setRovers(new ArrayList<>());
+
+            rover1 = new Rover.RoverBuilder()
+                    .roverId("R1")
+                    .name("Rover1")
+                    .position(new RoverPosition(1, 1, CompassDirection.N))
+                    .plateau(plateau)
+                    .build();
+
+            rover2 = new Rover.RoverBuilder()
+                    .roverId("R2")
+                    .name("Rover2")
+                    .position(new RoverPosition(2, 2, CompassDirection.E))
+                    .plateau(plateau)
+                    .build();
+
+            missionControl.addRover(rover1);
+            missionControl.addRover(rover2);
+        }
+
+        @Test
+        public void testIsPositionOutOfRange_PositionWithinRange() {
+            RoverPosition position = new RoverPosition(3, 3, CompassDirection.N);
+            assertFalse(missionControl.isPositionOccupied(rover1, position));
+        }
+
+        @Test
+        public void testIsPositionOutOfRange_CoordinatesLargerThenOne() {
+            RoverPosition position = new RoverPosition(6, 6, CompassDirection.N);
+            assertThrows(IllegalArgumentException.class, () -> {
+                missionControl.landRoverToPlateau(rover1, position, plateau);
+            });
+        }
+        @Test
+        public void testIsPositionOutOfRange_CoordinatesEqualToZero() {
+            RoverPosition position = new RoverPosition(0, 1, CompassDirection.N);
+            assertThrows(IllegalArgumentException.class, () -> {
+                missionControl.landRoverToPlateau(rover1, position, plateau);
+            });
+        }
+
+
+    }
+
 }
