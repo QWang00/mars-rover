@@ -133,7 +133,7 @@ class MissionControlTest {
         void testMoveRoverByInstructions_SingleInstruction() {
             rover.setPlateau(new Plateau(new int[]{14, 14}, "P1"));
             rover.setPosition(new RoverPosition(6, 5, CompassDirection.S));
-            missionControl.getRovers().add(rover);
+            missionControl.addRover(rover);
 
             List<Instruction> instructions = new ArrayList<>() {};
             instructions.add(Instruction.M);

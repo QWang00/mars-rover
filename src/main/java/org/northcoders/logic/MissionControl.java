@@ -44,7 +44,7 @@ public class MissionControl {
         CompassDirection currentFacing = null;
 
         for (Instruction instruction : instructions){
-            rover.processInstruction(instruction, rover);
+            rover.processInstruction(instruction, this);
             currentFacing = rover.getPosition().getFacing();
 
         }
