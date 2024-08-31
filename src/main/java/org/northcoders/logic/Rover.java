@@ -1,8 +1,9 @@
 package org.northcoders.logic;
 
-import org.northcoders.input.CompassDirection;
-import org.northcoders.input.Instruction;
-import org.northcoders.input.RoverPosition;
+import org.northcoders.model.CompassDirection;
+import org.northcoders.model.Instruction;
+import org.northcoders.model.Plateau;
+import org.northcoders.model.RoverPosition;
 
 public class Rover {
     private final String roverID;

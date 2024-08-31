@@ -3,9 +3,10 @@ package org.northcoders.logic;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.northcoders.input.CompassDirection;
-import org.northcoders.input.Instruction;
-import org.northcoders.input.RoverPosition;
+import org.northcoders.model.CompassDirection;
+import org.northcoders.model.Instruction;
+import org.northcoders.model.Plateau;
+import org.northcoders.model.RoverPosition;
 
 import java.util.*;
 
