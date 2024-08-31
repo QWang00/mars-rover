@@ -1,4 +1,4 @@
-package org.northcoders.logic;
+package org.northcoders.model;
 
 public class Plateau{
     private int maxX;
