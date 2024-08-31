@@ -26,12 +26,25 @@ public class MissionControl {
 
     public void landRoverToPlateau(Rover rover, RoverPosition position, Plateau plateau) {
         if (rover == null || position == null || plateau == null)
-            throw new NullPointerException();
-        if (!rovers.contains(rover)) throw new IllegalArgumentException();
+            throw new NullPointerException("Arguments cannot be null");
+        if (!rovers.contains(rover)) throw new IllegalArgumentException("Rover is not in the list");
+
+        if (isPositionOutOfRange(position, plateau)) {
+            throw new IllegalArgumentException("Position is out of range of the plateau");
+        }
+
+        if (isPositionOccupied(rover, position)) {
+            throw new IllegalStateException("Position is occupied by another rover");
+        }
 
         rover.setPlateau(plateau);
         rover.setPosition(position);
-        }
+    }
+
+    public boolean isPositionOutOfRange(RoverPosition position, Plateau plateau) {
+        return position.getX() < 1 || position.getX() > plateau.getMaxX() ||
+                position.getY() < 1 || position.getY() > plateau.getMaxY();
+    }
 
 
     public RoverPosition getRoverPosition(Rover rover) {
