@@ -27,7 +27,7 @@ public class MissionControl {
     public void landRoverToPlateau(Rover rover, RoverPosition position, Plateau plateau) {
         if (rover == null || position == null || plateau == null)
             throw new NullPointerException("Arguments cannot be null");
-        if (!rovers.contains(rover)) throw new IllegalArgumentException("Rover is not in the list");
+        if (!rovers.contains(rover)) throw new IllegalArgumentException("Rover is not in control");
 
         if (isPositionOutOfRange(position, plateau)) {
             throw new IllegalArgumentException("Position is out of range of the plateau");
