@@ -45,8 +45,26 @@ public class Simulation {
     }
 
     public Rover createRover() {
-        return null;
+        while (true) {
+            System.out.println("Enter Rover ID:");
+            String id = scanner.nextLine();
+            System.out.println("Enter Rover Name:");
+            String name = scanner.nextLine();
+
+            if (!missionControl.getRovers().stream().anyMatch(r -> r.getRoverID().equals(id) || r.getName().equals(name))) {
+                Rover rover = new Rover.RoverBuilder()
+                        .roverId(id)
+                        .name(name)
+                        .plateau(plateau)
+                        .build();
+                missionControl.addRover(rover);
+                return rover;
+            } else {
+                System.out.println("ID or Name already exists. Please enter a different one.");
+            }
+        }
     }
+
 
     public void landRoverToPlateau(Rover rover1) {
     }
