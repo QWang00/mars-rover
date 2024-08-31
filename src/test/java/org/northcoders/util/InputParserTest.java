@@ -1,8 +1,11 @@
-package org.northcoders.inputlayer;
+package org.northcoders.util;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.northcoders.model.CompassDirection;
+import org.northcoders.model.Instruction;
+import org.northcoders.util.InputParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +25,11 @@ class InputParserTest {
     class parseCompassDirection{
         @Test
         void parseCompassDirection_emptyString() {
-            assertThrows(IllegalArgumentException.class,()-> inputParser.parseCompassDirection(""));
+            assertThrows(IllegalArgumentException.class,()-> inputParser.parseFacingDirection(""));
         }
         @Test
         void parseCompassDirection_nullString() {
-            assertThrows(NullPointerException.class,()->inputParser.parseCompassDirection(null));
+            assertThrows(NullPointerException.class,()->inputParser.parseFacingDirection(null));
         }
         @Test
         void parseCompassDirection_validString() {
@@ -34,15 +37,15 @@ class InputParserTest {
             CompassDirection expectedS = CompassDirection.S;
             CompassDirection expectedW = CompassDirection.W;
             CompassDirection expectedE = CompassDirection.E;
-            assertEquals(expectedN, inputParser.parseCompassDirection("N"));
-            assertEquals(expectedS, inputParser.parseCompassDirection("S"));
-            assertEquals(expectedE, inputParser.parseCompassDirection("E"));
-            assertEquals(expectedW, inputParser.parseCompassDirection("W"));
+            assertEquals(expectedN, inputParser.parseFacingDirection("N"));
+            assertEquals(expectedS, inputParser.parseFacingDirection("S"));
+            assertEquals(expectedE, inputParser.parseFacingDirection("E"));
+            assertEquals(expectedW, inputParser.parseFacingDirection("W"));
         }
         @Test
         void parseCompassDirection_inValidString() {
-            assertThrows(IllegalArgumentException.class, ()->inputParser.parseCompassDirection("n"));
-            assertThrows(IllegalArgumentException.class, ()-> inputParser.parseCompassDirection("north"));
+            assertThrows(IllegalArgumentException.class, ()->inputParser.parseFacingDirection("n"));
+            assertThrows(IllegalArgumentException.class, ()-> inputParser.parseFacingDirection("north"));
         }
     }
 

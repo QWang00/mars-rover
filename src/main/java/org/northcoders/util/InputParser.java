@@ -1,4 +1,7 @@
-package org.northcoders.input;
+package org.northcoders.util;
+
+import org.northcoders.model.CompassDirection;
+import org.northcoders.model.Instruction;
 
 import java.util.ArrayList;
 import java.util.List;
