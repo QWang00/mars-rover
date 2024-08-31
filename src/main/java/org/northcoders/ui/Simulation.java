@@ -3,10 +3,12 @@ package org.northcoders.ui;
 import org.northcoders.logic.MissionControl;
 import org.northcoders.logic.Rover;
 import org.northcoders.model.CompassDirection;
+import org.northcoders.model.Instruction;
 import org.northcoders.model.Plateau;
 import org.northcoders.model.RoverPosition;
 import org.northcoders.util.InputParser;
 
+import java.util.List;
 import java.util.Scanner;
 
 import static org.northcoders.model.CompassDirection.N;
@@ -77,7 +79,7 @@ public class Simulation {
             try {
                 System.out.println("Enter landing position coordinate x:");
                 String x = scanner.next();
-                System.out.println("Enter landing position coordinate x:");
+                System.out.println("Enter landing position coordinate y:");
                 String y = scanner.next();
                 System.out.println("Enter landing facing direction (N, S, W, or E: ");
                 String direction = scanner.next();
@@ -106,7 +108,47 @@ public class Simulation {
         }
     }
 
-    public void moveRoverByInstructions(Rover rover1) {
+public void moveRoverByInstructions(Rover rover) {
+    while (true) {
+        System.out.println("Enter movement instructions for Rover (L, R, M):");
+        String instructions = scanner.nextLine();
+
+        try {
+            List<Instruction> instructionList = inputParser.parseInstruction(instructions);
+
+            boolean isValid = executeInstructionsWithHandling(rover, instructionList);
+
+            if (isValid) break;
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid instructions. Please enter only L, R, M.");
+        }
+    }
+}
+
+    private boolean executeInstructionsWithHandling(Rover rover, List<Instruction> instructionList) {
+
+        RoverPosition originalPosition = rover.getPosition();
+        RoverPosition tempPosition = new RoverPosition(
+                originalPosition.getX(),
+                originalPosition.getY(),
+                originalPosition.getFacing()
+        );
+
+        try {
+            CompassDirection finalDirection = missionControl.moveRoverByInstructions(rover, instructionList);
+            int x = rover.getPosition().getX();
+            int y = rover.getPosition().getY();
+
+            System.out.println("Rover is now position at ["+x +", "+y+", " + finalDirection+"]");
+            return true;
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
+
+
+            rover.setPosition(tempPosition);
+            return false;
+        }
     }
 
     public void simulateEdgeCollision(Rover rover1) {
