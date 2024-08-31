@@ -156,14 +156,14 @@ public class Rover {
         }
     }
 
-    protected void processInstruction(Instruction instruction, Rover rover) {
-        CompassDirection currentFacing;
+    protected void processInstruction(Instruction instruction, MissionControl missionControl) {
+        CompassDirection currentFacing = getPosition().getFacing();
         if(instruction == Instruction.M){
-            rover.moveForward(new MissionControl());
+            moveForward(missionControl);
         }
-        currentFacing = rover.getPosition().getFacing();
+
         CompassDirection newFacingDirection = changeFacingDirection(currentFacing, instruction);
-        rover.getPosition().setFacing(newFacingDirection);
+        getPosition().setFacing(newFacingDirection);
 
     }
 
