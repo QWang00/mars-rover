@@ -8,6 +8,7 @@ import org.northcoders.model.Instruction;
 import org.northcoders.model.Plateau;
 import org.northcoders.model.RoverPosition;
 
+import javax.swing.text.Position;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -65,6 +66,44 @@ class MissionControlTest {
             Plateau plateau = new Plateau(new int[]{15, 7}, "P1");
             assertThrows(IllegalArgumentException.class, () -> missionControl.landRoverToPlateau(rover, position, plateau));
 
+        }
+
+        @Test
+        public void testLandRoverToPlateau_PositionOccupied() {
+            Plateau plateau = new Plateau(new int[]{15,15}, "P1");
+            RoverPosition position1 = new RoverPosition(3, 3, CompassDirection.N);
+            rover.setPlateau(plateau);
+            rover.setPosition(position1);
+            missionControl.addRover(rover);
+
+            RoverPosition position2 = new RoverPosition(5, 3, CompassDirection.N);
+            Rover rover2 = new Rover.RoverBuilder().plateau(plateau).position(position2).build();
+            missionControl.addRover(rover2);
+
+            RoverPosition position3 = new RoverPosition(3, 3, CompassDirection.S);
+
+            IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
+                missionControl.landRoverToPlateau(rover2, position3, plateau);
+            });
+
+            assertEquals("Position is occupied by another rover", thrown.getMessage());
+        }
+
+        @Test
+        public void testLandRoverToPlateau_PositionOutOfRange() {
+            Plateau plateau = new Plateau(new int[]{15,15}, "P1");
+            RoverPosition position1 = new RoverPosition(3, 3, CompassDirection.N);
+            rover.setPlateau(plateau);
+            rover.setPosition(position1);
+            missionControl.addRover(rover);
+
+            RoverPosition positionOutOfRange = new RoverPosition(17, 3, CompassDirection.N);
+
+            IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+                missionControl.landRoverToPlateau(rover, positionOutOfRange, plateau);
+            });
+
+            assertEquals("Position is out of range of the plateau", thrown.getMessage());
         }
 
         @Test
