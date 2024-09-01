@@ -18,7 +18,7 @@ In this simulation, you’ll:
 - **Movement Instructions**: Navigate rovers with commands to turn and move.
 - **Collision and Boundary Handling**: Manage rovers' interactions with the plateau's edges and each other.
 
-## 🛠Getting Started
+## Getting Started
 
 Here’s how you can get the project running on your machine:
 
