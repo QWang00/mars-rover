@@ -1,8 +1,8 @@
-# Mars Rover Simulation 🌌🚀
+# Mars Rover Simulation 
 
 Welcome to the Mars Rover Simulation project! This project lets you explore the Martian surface with rovers, land them on a plateau, and move them around based on your instructions. Perfect for a quick space adventure!
 
-## 🚀 Project Overview
+## Project Overview
 
 In this simulation, you’ll:
 
@@ -11,14 +11,14 @@ In this simulation, you’ll:
 - Move the rovers using simple commands.
 - Handle edge cases where rovers hit the plateau's boundaries or collide with each other.
 
-## 🌟 Features
+##  Features
 
 - **Plateau Creation**: Define the size and name of the Martian landscape.
 - **Rover Management**: Land and control rovers on the plateau.
 - **Movement Instructions**: Navigate rovers with commands to turn and move.
 - **Collision and Boundary Handling**: Manage rovers' interactions with the plateau's edges and each other.
 
-## 🛠️ Getting Started
+## 🛠Getting Started
 
 Here’s how you can get the project running on your machine:
 
@@ -44,7 +44,7 @@ Here’s how you can get the project running on your machine:
 
    The application will guide you through creating a plateau, landing rovers, and giving movement commands.
 
-## 🎮 How to Use
+##  How to Use
 
 1. **Create a Plateau:**
 
@@ -58,7 +58,7 @@ Here’s how you can get the project running on your machine:
 
    Use `L` for left turn, `R` for right turn, and `M` for moving forward.
 
-## 📝 API Documentation
+##  API Documentation
 
 - **`Rover`**: Represents a rover with methods to set its position and move it based on instructions.
 - **`Plateau`**: Defines the boundaries of the Martian landscape.
