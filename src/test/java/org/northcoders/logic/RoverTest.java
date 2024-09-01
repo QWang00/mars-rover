@@ -185,7 +185,11 @@ class RoverTest {
 
             currentPosition = new RoverPosition(10, 14, CompassDirection.N);
             rover.setPosition(currentPosition);
-            rover.moveForward(missionControl);
+            IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
+                rover.moveForward(missionControl);
+            });
+
+            assertEquals("Warning: Rover is at the edge and cannot move further", exception.getMessage());
             assertEquals(10, rover.getPosition().getX());
             assertEquals(14, rover.getPosition().getY());
             assertEquals(CompassDirection.N, rover.getPosition().getFacing());
@@ -196,7 +200,11 @@ class RoverTest {
         void testMoveForward_HitPlateauTopRightEdge() {
             currentPosition = new RoverPosition(14, 10, CompassDirection.E);
             rover.setPosition(currentPosition);
-            rover.moveForward(missionControl);
+            IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
+                rover.moveForward(missionControl);
+            });
+
+            assertEquals("Warning: Rover is at the edge and cannot move further", exception.getMessage());
             assertEquals(14, rover.getPosition().getX());
             assertEquals(10, rover.getPosition().getY());
             assertEquals(CompassDirection.E, rover.getPosition().getFacing());
@@ -206,7 +214,11 @@ class RoverTest {
         void testMoveForward_HitPlateauBottomLeftEdge() {
             currentPosition = new RoverPosition(1, 10, CompassDirection.W);
             rover.setPosition(currentPosition);
-            rover.moveForward(missionControl);
+            IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
+                rover.moveForward(missionControl);
+            });
+
+            assertEquals("Warning: Rover is at the edge and cannot move further", exception.getMessage());
             assertEquals(1, rover.getPosition().getX());
             assertEquals(10, rover.getPosition().getY());
             assertEquals(CompassDirection.W, rover.getPosition().getFacing());
@@ -216,7 +228,12 @@ class RoverTest {
         void testMoveForward_HitPlateauBottomRightEdge() {
             currentPosition = new RoverPosition(10, 1, CompassDirection.S);
             rover.setPosition(currentPosition);
-            rover.moveForward(missionControl);
+
+            IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
+                rover.moveForward(missionControl);
+            });
+
+            assertEquals("Warning: Rover is at the edge and cannot move further", exception.getMessage());
             assertEquals(10, rover.getPosition().getX());
             assertEquals(1, rover.getPosition().getY());
             assertEquals(CompassDirection.S, rover.getPosition().getFacing());
@@ -238,7 +255,7 @@ class RoverTest {
                 rover.moveForward(missionControl);
             });
 
-            assertEquals("Cannot move forward; position is occupied by another rover.", exception.getMessage());
+            assertEquals("Warning: Position is occupied by another rover, cannot move forward", exception.getMessage());
         }
 
         @Test
