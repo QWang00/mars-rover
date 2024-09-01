@@ -1,44 +1,56 @@
 package org.northcoders.ui;
 
-
-import org.northcoders.logic.MissionControl;
+l;
 import org.northcoders.logic.Rover;
-import org.northcoders.util.InputParser;
+
 
 public class Main {
     public static void main(String[] args) {
         Simulation simulation = new Simulation();
 
-        System.out.println("Welcome to Mars Rover Simulation!");
+        System.out.println("======================================");
+        System.out.println("Welcome to the Mars Rover Simulation!");
+        System.out.println("======================================\n");
 
-        System.out.println("Let's create a plateau on Mars.");
+
+        System.out.println(">>> STEP 1: Create the Plateau <<<");
+        System.out.println("Enter the dimensions and name of the plateau where the rovers will operate.");
         simulation.createPlateau();
+        System.out.println("Plateau created successfully!");
+        System.out.println("--------------------------------------\n");
 
-        System.out.println("Great! Now let's create the first Rover.");
+
+        System.out.println(">>> STEP 2: Create and Land the First Rover <<<");
         Rover rover1 = simulation.createRover();
-        System.out.println("Now let's land Rover 1 on the plateau. Ensure the position is within the range of the plateau.");
+        System.out.println("Position the first Rover on the plateau.");
         simulation.landRoverToPlateau(rover1);
+        System.out.println("Rover " + rover1.getName() + " landed successfully!");
+        System.out.println("--------------------------------------\n");
 
-        System.out.println("Cool! Let's create the second Rover.");
+
+        System.out.println(">>> STEP 3: Create and Land the Second Rover <<<");
         Rover rover2 = simulation.createRover();
-        System.out.println("Now let's land Rover 2 on Mars. Make sure the position is within the range of your plateau!");
+        System.out.println("Position the second Rover on the plateau.");
         simulation.landRoverToPlateau(rover2);
+        System.out.println("Rover " + rover2.getName() + " landed successfully!");
+        System.out.println("--------------------------------------\n");
 
-        System.out.println("Time to give Rover 1 a ride! Let's move it.");
-        System.out.println("What are your instructions?");
+
+        System.out.println(">>> STEP 4: Move the First Rover <<<");
+        System.out.println("Enter the movement instructions for Rover " + rover1.getName() + ":");
         simulation.moveRoverByInstructions(rover1);
+        System.out.println("Rover " + rover1.getName() + " moved successfully!");
+        System.out.println("--------------------------------------\n");
 
-        System.out.println("Now for Rover 2! Let's get it moving.");
-        System.out.println("What are your instructions?");
+
+        System.out.println(">>> STEP 5: Move the Second Rover <<<");
+        System.out.println("Enter the movement instructions for Rover " + rover2.getName() + ":");
         simulation.moveRoverByInstructions(rover2);
+        System.out.println("Rover " + rover2.getName() + " moved successfully!");
+        System.out.println("--------------------------------------\n");
 
-        System.out.println("Let's simulate the case when Rover 1 hits the edge of the plateau.");
-        simulation.simulateEdgeCollision(rover1);
-
-        System.out.println("Now, let's see what happens when rovers collide.");
-        simulation.simulateRoverCollision(rover1, rover2);
-
-        System.out.println("That's the end of the simulation. Thank you for participating!");
-        simulation.endSimulation();
+        System.out.println("======================================");
+        System.out.println("Simulation complete! Thank you for participating in the Mars Rover Simulation.");
+        System.out.println("======================================");
     }
 }
