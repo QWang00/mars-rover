@@ -151,12 +151,5 @@ public void moveRoverByInstructions(Rover rover) {
         }
     }
 
-    public void simulateEdgeCollision(Rover rover1) {
-    }
 
-    public void simulateRoverCollision(Rover rover1, Rover rover2) {
-    }
-
-    public void endSimulation() {
-    }
 }
