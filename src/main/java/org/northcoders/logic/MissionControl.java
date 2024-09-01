@@ -48,7 +48,7 @@ public class MissionControl {
 
 
     public RoverPosition getRoverPosition(Rover rover) {
-        if(!rovers.contains(rover)) throw new NullPointerException("Rover is not in the list");
+        if(!rovers.contains(rover)) throw new NullPointerException("Rover is not in control");
         else{return rover.getPosition();}
 
     }
