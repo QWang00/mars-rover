@@ -1,7 +1,8 @@
-package org.northcoders.ui;
+package org.northcoders;
 
 
 import org.northcoders.logic.Rover;
+import org.northcoders.ui.Simulation;
 
 
 public class Main {
